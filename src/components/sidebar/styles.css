@@ -1,0 +1,89 @@
+#componente-side-bar {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+}
+
+.componente-side-bar-aberto{
+    width: 100%;
+    background-color: #00000080;
+}
+
+#componente-side-bar ul {
+    background-color: var(--cor-plano-de-fundo-primaria);
+    height: 100vh;
+    width: 240px;
+}
+
+/* Logomarca */
+#componente-side-bar #container-logomarca {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px;
+    box-shadow: 0px 1px 5px black;
+    margin-bottom: 3px;
+}
+
+#componente-side-bar #container-logomarca img {
+    height: 64px;
+}
+
+#component-side-bar #container-logomarca h3 {
+    
+}
+
+/* Itens */
+#componente-side-bar ul li {
+    display: flex;
+    align-items: center;
+    padding: 15px 0px 15px 20px;
+    margin-bottom: 2px;
+}
+
+#componente-side-bar ul li img {
+    height: 18px;
+    margin-right: 20px;
+}
+
+#componente-side-bar ul li:nth-child(even) { /* Estilo para toda linha par - http://www.digitaldev.com.br/2012/01/27/intercalando-cores-entre-linhas-de-uma-tabela-ou-lista-usando-css3/ */
+    background-color: var(--cor-plano-de-fundo-primaria-escuro);
+}
+
+#componente-sidebar ul li:hover {
+    cursor: pointer;
+}
+
+/* Fechar/Abrir Menu */
+#componente-side-bar button {
+    background-color: var(--cor-plano-de-fundo-primaria);
+    height: 32px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    border-radius: 0px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#componente-side-bar #botao-side-bar-ausente {
+    height: 100vh;
+}
+
+#componente-side-bar button img {
+    height: 24px;
+}
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    #componente-side-bar {
+        position: unset;
+    }
+
+    .componente-side-bar-aberto{
+        width: unset;
+        background-color: unset;
+    }
+}

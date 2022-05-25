@@ -1,0 +1,86 @@
+/* Cabeçalho */
+#tela-meus-treinos .conteudo header #container-logomarca {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    box-shadow: 0px 0px 2px black;
+    margin-bottom: 10px;
+}
+
+#tela-meus-treinos .conteudo header {
+    border-bottom: 1px solid var(--cor-plano-de-fundo-primaria-escuro);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+#tela-meus-treinos .conteudo header #container-logomarca img {
+    height: 64px;
+}
+
+/* Formulário */
+#tela-meus-treinos .conteudo form .form-group {
+    margin-bottom: 8px;
+}
+
+/* Sobre o treino */
+#tela-meus-treinos .conteudo #sobre-o-treino {
+    background-color: var(--cor-plano-de-fundo-primaria-escuro);
+    padding: 10px;
+    border-radius: 7px;
+}
+
+/* Exercícios */
+#tela-meus-treinos .conteudo .container-exercicio {
+    margin-top: 13px;
+}
+
+#tela-meus-treinos .conteudo .container-exercicio img {
+    width: 100%;
+    border-width: 0px 3px;
+    border-style: solid;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+    vertical-align: middle; /*https://stackoverflow.com/questions/10844205/html-5-strange-img-always-adds-3px-margin-at-bottom*/
+}
+
+#tela-meus-treinos .conteudo .container-exercicio > div {
+    background-color: var(--cor-plano-de-fundo-primaria-escuro);
+    padding: 10px;
+}
+
+#tela-meus-treinos .conteudo .container-exercicio > div:first-child {
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+}
+
+#tela-meus-treinos .conteudo .container-exercicio > div:nth-child(2) {
+    padding: 0px;
+}
+
+#tela-meus-treinos .conteudo .container-exercicio > div:nth-child(2) a {
+    font-style: italic;
+    text-decoration: underline;
+    text-align: center;
+    display: block;
+}
+
+#tela-meus-treinos .conteudo .container-exercicio > div:last-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+#tela-meus-treinos .conteudo .container-exercicio > div p {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    #tela-meus-treinos .conteudo header #container-logomarca {
+        justify-content: flex-start;
+    }
+}

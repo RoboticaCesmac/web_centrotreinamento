@@ -1,0 +1,33 @@
+#tela-autenticacao-aluno{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tela-autenticacao-aluno form img {
+    object-fit: contain;
+    height: 120px;
+}
+
+#tela-autenticacao-aluno form {
+    background-color: var(--cor-plano-de-fundo-primaria);
+    padding: 5px 20px 20px 20px;
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+
+    margin: 0px 10px;
+}
+
+#tela-autenticacao-aluno form button {
+    margin-top: 5px;
+}
+
+#tela-autenticacao-aluno a {
+    color: var(--cor-texto-escuro);
+    margin-top: 7px;
+    text-align: center;
+    font-size: 14px;
+    text-decoration: none;
+}

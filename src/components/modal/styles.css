@@ -1,0 +1,40 @@
+#componente-modal {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    background-color: #000000bf;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#componente-modal > div {
+    /* Código para a primeira div de dentro do modal */
+    background-color: var(--cor-plano-de-fundo-primaria);
+    padding: 10px;
+    min-width: 50%;
+    border-radius: 7px;
+}
+
+/* Cabeçalho */
+
+
+#componente-modal div header {
+    display: flex;
+    flex-direction: row;
+}
+
+#componente-modal div header h2 {
+    border-bottom: solid 1px;
+    padding-bottom: 5px;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+    flex: 1;
+}
+
+#componente-modal div header img {
+    height: 12px;
+    margin-left: 10px;
+}

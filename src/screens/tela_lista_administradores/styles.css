@@ -1,0 +1,56 @@
+/* Cabeçalho */
+
+#tela-lista-usuarios .conteudo header h2 {
+    padding-bottom: 5px;
+    border-bottom: solid 1px;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+    flex: 1;
+}
+
+#tela-lista-usuarios .conteudo header > button:first-of-type {
+    margin-top: 5px;
+    width: 100%;
+}
+
+/* Container Busca */
+#tela-lista-usuarios .conteudo #container-busca {
+    display: flex;
+    margin: 8px 0px;
+}
+
+#tela-lista-usuarios .conteudo #container-busca input {
+    flex: 1;
+}
+
+#tela-lista-usuarios .conteudo #container-busca button {
+    margin-left: 5px;
+}
+
+/* Ícones */
+
+#tela-lista-usuarios table tr td:last-child img {
+    height: 16px;
+}
+
+#tela-lista-usuarios #nenhum-registro {
+    text-align: center;
+}
+
+#tela-lista-usuarios .conteudo table {
+    display: table;
+}
+
+/* Obs.: Configuração da tabela tá no global.css*/
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    #tela-lista-usuarios .conteudo header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #tela-lista-usuarios .conteudo header > button:first-of-type {
+        width: auto;
+    }
+}

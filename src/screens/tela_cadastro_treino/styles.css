@@ -1,0 +1,79 @@
+/* Cabeçalhos */
+
+#tela-cadastro-treino .conteudo header {
+    margin-bottom: 8px;
+}
+
+#tela-cadastro-treino .conteudo header h2 {
+    padding-bottom: 5px;
+    border-bottom: solid 1px;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+    flex: 1;
+}
+
+#tela-cadastro-treino .conteudo header > button:first-of-type {
+    margin-top: 5px;
+    width: 100%;
+}
+
+#tela-cadastro-treino .conteudo form .form-group {
+    margin-bottom: 8px;
+}
+
+/* Botões formulário */
+
+#tela-cadastro-treino .conteudo form #container-botoes {
+    display: flex;
+    flex-direction: column;
+}
+
+#tela-cadastro-treino .conteudo form #container-botoes button:not(:first-child) {
+    /* Exceto para o primeiro botão */
+    margin-top: 10px;
+}
+
+/* Ícones tabela */
+
+#tela-cadastro-treino .conteudo table tr td:last-child img {
+    height: 16px;
+}
+
+#tela-cadastro-treino .conteudo #container-botoes {
+    padding-top: 10px;
+    border-top: 1px solid var(--cor-plano-de-fundo-primaria-escuro);
+    margin-top: 10px;
+}
+
+#tela-cadastro-treino .conteudo #nenhum-registro {
+    text-align: center;
+}
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    /* Cabeçalhos */
+    #tela-cadastro-treino .conteudo header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #tela-cadastro-treino .conteudo header > button:first-of-type {
+        width: auto;
+    }
+    
+    /* Formulário */
+    #tela-cadastro-treino .conteudo form #container-botoes{
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    #tela-cadastro-treino .conteudo form #container-botoes button:not(:first-child) {
+        /* Exceto para o primeiro botão */
+        margin-top: 0px;
+    }
+
+    #tela-cadastro-treino .conteudo form #container-botoes button:first-child{
+        margin-right: 10px;
+    }
+}
+

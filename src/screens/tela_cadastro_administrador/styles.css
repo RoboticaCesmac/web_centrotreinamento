@@ -1,0 +1,56 @@
+#tela-cadastro-usuario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tela-cadastro-usuario form img {
+    object-fit: contain;
+    height: 120px;
+}
+
+#tela-cadastro-usuario form {
+    background-color: var(--cor-plano-de-fundo-primaria);
+    padding: 5px 20px 20px 20px;
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+
+    margin: 0px 10px;
+}
+
+#tela-cadastro-usuario form button {
+    margin-top: 5px;
+}
+
+#tela-cadastro-usuario a {
+    margin-top: 7px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Container de botões */
+#tela-cadastro-usuario form div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    /* Container de botões */
+    #tela-cadastro-usuario form div:last-child {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #tela-cadastro-usuario form div:last-child button {
+        width: 100%;
+        margin-right: 5px;
+    }
+
+    #tela-cadastro-usuario form div:last-child button:last-child {
+        margin-right: 0px;
+    }
+}

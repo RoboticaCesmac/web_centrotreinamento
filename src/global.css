@@ -1,0 +1,152 @@
+:root {
+  --cor-plano-de-fundo-primaria: #eeeeee;
+  --cor-plano-de-fundo-primaria-escuro: #dfdfdf;
+  
+  --cor-texto-claro: #eeeeee;
+  --cor-texto-escuro: #0A2344;
+  
+  --cor-primaria: #0A2344;
+  --cor-secundaria: #ee007b;
+  --cor-secundaria-clara: rgba(204, 0, 99, 0.3);
+  --cor-secundaria-escura: #9C1057;
+
+  --cor-danger: #cc0000;
+  --cor-danger-light: #e83b3b;
+  --cor-success: #008000;
+  --cor-success-light: #4f9a52;
+}
+
+* {
+  box-sizing: border-box; /* Para que o padding esteja incluso no valor da largura e/ou altura */
+  margin: 0;
+  padding: 0;
+}
+
+#root > div:first-child{
+  min-height: 100vh;
+
+  background-image: url("./assets//images//background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: row;
+}
+
+body {
+  margin: 0;
+  background-color: var(--cor-plano-de-fundo-primaria);
+}
+
+body, button, input, textarea, select {
+  font: 16px Nunito, sans-serif;
+  color: var(--cor-texto-escuro);
+  resize: vertical;
+}
+
+h1, h2, h3, p, label{
+  color: var(--cor-texto);
+}
+
+button {
+  background-color: var(--cor-secundaria);
+  padding: 8px;
+  border-radius: 5px;
+  border: 0px;
+
+  color: var(--cor-texto-claro)
+}
+
+button:hover {
+  background-color: var(--cor-secundaria-escura);
+  cursor: pointer;
+}
+
+input, textarea, select {
+  color: var(--cor-texto-escuro);
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-horizontal {
+  flex-direction: row;
+}
+
+.form-group label {
+  padding-left: 5px;
+}
+
+.form-group :nth-of-type(1) {
+  margin-bottom: 5px;
+}
+
+/* Conteúdo */
+
+.conteudo {
+  background-color: var(--cor-plano-de-fundo-primaria);
+  padding: 10px;
+  margin-left: 32px;
+  /* Cálculo da largura feito para poder descontar a largura do botão do menu */
+  width: calc(100% - 32px);
+}
+
+/* Tabela */
+table {
+  display: block;
+  overflow-y: auto;
+  width: 100%;
+  border: solid 1px;
+  border-color: var(--cor-plano-de-fundo-primaria-escuro);
+}
+
+table thead tr th, table tbody tr td {
+  padding: 15px 2px;
+  text-align: center;
+}
+
+table tbody tr td:last-child button{
+  /* Botões da última coluna */
+  margin: 2px;
+}
+
+table thead tr th {
+  background-color: var(--cor-plano-de-fundo-primaria-escuro);
+}
+
+table tbody tr:nth-child(even) {  /* Estilo para toda linha par - http://www.digitaldev.com.br/2012/01/27/intercalando-cores-entre-linhas-de-uma-tabela-ou-lista-usando-css3/ */
+  background-color: var(--cor-plano-de-fundo-primaria-escuro);
+}
+
+/* Tabela - Paginação */
+
+.conteudo .paginacao {
+  background-color: var(--cor-plano-de-fundo-primaria-escuro);
+  padding: 12px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.conteudo .paginacao p {
+  margin: 0px 6px;
+}
+
+/* Quando a largura da tela for 740px ou maior */
+@media(min-width: 740px){
+  .conteudo {
+      margin: 20px;
+      border-radius: 8px;
+  }
+
+  table{
+    display: table;
+  }
+}

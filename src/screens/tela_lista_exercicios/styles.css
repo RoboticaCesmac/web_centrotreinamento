@@ -1,0 +1,63 @@
+/* Cabeçalho */
+
+#tela-lista-exercicios .conteudo header h2 {
+    padding-bottom: 5px;
+    border-bottom: solid 1px;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+    flex: 1;
+}
+
+#tela-lista-exercicios .conteudo header > button:first-of-type {
+    margin-top: 5px;
+    width: 100%;
+}
+
+/* Container Busca */
+#tela-lista-exercicios .conteudo #container-busca {
+    display: flex;
+    margin: 8px 0px;
+}
+
+#tela-lista-exercicios .conteudo #container-busca input {
+    flex: 1;
+}
+
+#tela-lista-exercicios .conteudo #container-busca button {
+    margin-left: 5px;
+}
+
+/* Ícones */
+
+#tela-lista-exercicios table tr td:last-child img {
+    height: 16px;
+}
+
+#tela-lista-exercicios #nenhum-registro {
+    text-align: center;
+}
+
+/* Modal visualização do GIF */
+#tela-lista-exercicios #modal-visualizacao-gif {
+    display: flex;
+    flex-direction: column;
+}
+
+#tela-lista-exercicios #modal-visualizacao-gif img {
+    margin: 10px 0px;
+    border: 3px solid var(--cor-plano-de-fundo-primaria-escuro);
+}
+
+/* Obs.: Configuração da tabela tá no global.css*/
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    #tela-lista-exercicios .conteudo header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #tela-lista-exercicios .conteudo header > button:first-of-type {
+        width: auto;
+    }
+}

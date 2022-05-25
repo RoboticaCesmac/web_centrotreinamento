@@ -1,0 +1,45 @@
+#tela-cadastro-exercicio .conteudo header {
+    margin-bottom: 8px;
+}
+
+#tela-cadastro-exercicio .conteudo header h2 {
+    padding-bottom: 5px;
+    border-bottom: solid 1px;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+}
+
+#tela-cadastro-exercicio .conteudo form .form-group {
+    margin-bottom: 8px;
+}
+
+/* Botões formulário */
+
+#tela-cadastro-exercicio .conteudo form #container-botoes {
+    display: flex;
+    flex-direction: column;
+}
+
+#tela-cadastro-exercicio .conteudo form #container-botoes button:not(:first-child) {
+    /* Exceto para o primeiro botão */
+    margin-top: 10px;
+}
+
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    #tela-cadastro-exercicio .conteudo form #container-botoes{
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    #tela-cadastro-exercicio .conteudo form #container-botoes button:not(:first-child) {
+        /* Exceto para o primeiro botão */
+        margin-top: 0px;
+    }
+
+    #tela-cadastro-exercicio .conteudo form #container-botoes button:first-child{
+        margin-right: 10px;
+    }
+}
+
