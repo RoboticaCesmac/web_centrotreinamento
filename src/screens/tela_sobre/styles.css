@@ -1,0 +1,49 @@
+/* Cabeçalho */
+
+#tela-sobre .conteudo header h2 {
+    padding-bottom: 5px;
+    border-bottom: solid 1px;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+    flex: 1;
+}
+
+/* Texto e Imagens */
+
+#tela-sobre .conteudo div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px 0px;
+}
+
+#tela-sobre .conteudo img {
+    margin: 40px 0px;
+    width: 50%;
+}
+
+/* Tabela - Links úteis */
+
+#tela-sobre .conteudo table {
+    display: table;
+}
+
+#tela-sobre .conteudo table tbody tr:nth-child(even) {  /* Estilo para toda linha par - http://www.digitaldev.com.br/2012/01/27/intercalando-cores-entre-linhas-de-uma-tabela-ou-lista-usando-css3/ */
+    background-color: unset;
+}
+
+#tela-sobre .conteudo table tbody tr:nth-child(even) td {
+    border-width: 1px 0px;
+    border-style: solid;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+}
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    /* Imagem e Imagens */
+    #tela-sobre .conteudo img {
+        margin: 5px 0px;
+        width: auto;
+        height: 150px;
+    }
+}

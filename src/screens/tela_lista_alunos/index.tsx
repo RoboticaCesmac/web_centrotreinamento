@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import db from '../../providers/firebase';
-import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
 
 import { Aluno } from '../../models/Aluno';
 
@@ -19,19 +19,25 @@ export default function TelaListaAlunos(){
     const navigate = useNavigate();
     const [statusCarregando, setStatusCarregando] = useState<string>("");
     
+    const [busca, setBusca] = useState<string>("");
     const [alunos, setAlunos] = useState<Aluno[]>([]);
 
     useEffect(() => {
-        carregarListaAlunos();
+        buscarAlunos();
     }, []);
 
     /**
-     * Carrega para um array os alunos cadastrados no banco de dados firestore
+     * Carrega para um array os alunos cadastrados no banco de dados firestore.
+     * Aplica o filtro se houver algo digitado no campo de busca.
      */
-    const carregarListaAlunos = async () => {
+    const buscarAlunos = async () => {
         try{
             setStatusCarregando("Buscando alunos...");
-            let documentosAlunos = await getDocs(collection(db, "alunos"));
+
+            //FALTA FAZER ESSA CONSULTA FUNCIONAR COMO UM LIKE OPERATOR. POR EXEMPLO: PARA O NOME FULANO, SE PESQUISAR POR ULA ELE DEVE ENCONTRAR.
+            //Pesquisar por prefixos: https://stackoverflow.com/questions/46568142/google-firestore-query-on-substring-of-a-property-value-text-search
+            let consulta = query(collection(db, "alunos"), where("nome", ">=", busca), where("nome", "<=", busca+"~"));
+            let documentosAlunos = await getDocs(consulta);
 
             let listaAlunos: Aluno[] = [];
             documentosAlunos.forEach((documento) => {
@@ -88,8 +94,8 @@ export default function TelaListaAlunos(){
                     </header>
 
                     <form id="container-busca">
-                        <input id="busca-aluno" placeholder="Buscar alunos" type="text" />
-                        <button type="button">Buscar</button>
+                        <input id="busca-aluno" type="text" placeholder="Buscar alunos" value={busca} onChange={(event) => setBusca(event.target.value)} />
+                        <button type="button" onClick={() => buscarAlunos()}>Buscar</button>
                     </form>
 
                     {alunos.length !== 0 ?
@@ -122,7 +128,7 @@ export default function TelaListaAlunos(){
 
                             <div className="paginacao">
                                 <a>Voltar</a>
-                                <p>1/2</p>
+                                <p>0/0</p>
                                 <a>Avançar</a>
                             </div>
                         </>

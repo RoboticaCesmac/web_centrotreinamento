@@ -12,6 +12,7 @@ import TelaListaAlunos from './screens/tela_lista_alunos';
 import TelaListaExercicios from './screens/tela_lista_exercicios';
 import TelaListaTreinos from './screens/tela_lista_treinos';
 import TelaMeusTreinos from './screens/tela_meus_treinos';
+import TelaSobre from './screens/tela_sobre';
 
 /**
  * Controlando autenticação em rotas no ReactJS | Diego Fernandes: https://youtu.be/sYe4r8WXGQg
@@ -29,6 +30,7 @@ import TelaMeusTreinos from './screens/tela_meus_treinos';
         <Route path="/cadastro-treino" element={<TelaCadastroTreino />} />
         <Route path="/cadastro-sequencia" element={<TelaCadastroSequencia />} />
         <Route path="/meus-treinos" element={<TelaMeusTreinos />} />
+        <Route path="/sobre" element={<TelaSobre />} />
         {/* <PrivateRoute exact path="/lista-usuarios" element={TelaListaUsuarios} */}
         <Route path="/autenticacao-administrador" element={<TelaAutenticacaoAdministrador/>} />
         <Route path="/*" element={<TelaAutenticacaoAluno />} />

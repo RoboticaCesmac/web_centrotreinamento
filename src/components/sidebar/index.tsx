@@ -48,7 +48,7 @@ export default function SideBar () {
                         <label>Exercícios</label>
                     </li>
 
-                    <li>
+                    <li onClick={() => navigate("/sobre")}>
                         <img src={iconeSobre} alt="Sobre" />
                         <label>Sobre</label>
                     </li>
