@@ -16,10 +16,6 @@ import logomarca from '../../assets/images/logo_cs.png';
 
 import './styles.css';
 
-interface ParametrosStateSequencia {
-    aluno: Aluno
-}
-
 interface ExercicioMeusTreinos extends ExercicioTreino {
     esconderImagem?: boolean
 } 
@@ -27,10 +23,10 @@ interface ExercicioMeusTreinos extends ExercicioTreino {
 export default function TelaMeusTreinos(){
     const navigate = useNavigate();
     const location = useLocation();
-    const stateParams = location.state as ParametrosStateSequencia;
     const queryParams = new URLSearchParams(useLocation().search);
     const [statusCarregando, setStatusCarregando] = useState<string>("");
     
+    const [nomeAluno, setNomeAluno] = useState<string>("Aluno");
     const [economiaDados, setEconomiaDados] = useState<boolean>(false);
     const [treinos, setTreinos] = useState<Treino[]>([]);
     const [exercicios, setExercicios] = useState<Exercicio[]>([]);
@@ -46,8 +42,19 @@ export default function TelaMeusTreinos(){
      * Chama as funções responsáveis por buscar no banco de dados o que é necessário para compor a tela
      */
     const inicializarTela = async () => {
+        definirNomeAluno();
         await buscarTreinos();
         await carregarExercicios();
+    }
+
+    /**
+     * Seta na variável o nome do aluno que está autenticado
+     */
+    const definirNomeAluno = () => {
+        if(localStorage.getItem("alunoAutenticado") !== null){
+            let aluno: Aluno = JSON.parse(localStorage.getItem("alunoAutenticado") || "");
+            setNomeAluno(aluno.nome);
+        }
     }
 
     /**
@@ -58,6 +65,7 @@ export default function TelaMeusTreinos(){
             setStatusCarregando("Buscando treinos...");
 
             if(queryParams.get("idAluno") === null){
+                navigate("/");
                 throw new Error("Aluno não identificado");
             }
 
@@ -158,7 +166,7 @@ export default function TelaMeusTreinos(){
                     </div>
 
                     <h2>Bem-vindo,</h2>
-                    <h3>{(stateParams !== null && stateParams.aluno !== undefined) ? stateParams.aluno.nome : "Aluno"}</h3>
+                    <h3>{nomeAluno}</h3>
                 </header>
                 
                 <form>

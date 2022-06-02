@@ -78,7 +78,7 @@ export default function TelaCadastroExercicio(){
                 descricao: descricao,
                 urlGIF: urlGIFAjustado
             }
-            
+
             //Se o exercício já existir apenas atualiza, mas se não existir, cria um novo cadastro. (merge: true)
             await setDoc(doc(db, "exercicios", exercicioID), exercicio, {merge: true});
 

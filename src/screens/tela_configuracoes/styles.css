@@ -1,0 +1,44 @@
+/* Cabeçalho */
+
+#tela-configuracoes .conteudo header {
+    margin-bottom: 8px;
+}
+
+#tela-configuracoes .conteudo header h2 {
+    padding-bottom: 5px;
+    border-bottom: solid 1px;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+    flex: 1;
+}
+
+/* Blocos de configuração */
+
+#tela-configuracoes .conteudo .container-configuracao {
+    padding: 10px;
+    
+    display: flex;
+    flex-direction: column;
+
+    border-bottom: solid 1px var(--cor-plano-de-fundo-primaria-escuro);
+    margin-bottom: 10px;
+}
+
+#tela-configuracoes .conteudo .container-configuracao p {
+    margin: 10px 0px;
+}
+
+#tela-configuracoes .conteudo form .form-group {
+    margin-bottom: 8px;
+}
+
+/* Quando a largura da tela for 740px ou maior */
+
+@media(min-width: 740px){
+    #tela-configuracoes .conteudo .container-configuracao {
+        display: block;
+    }
+
+    #tela-configuracoes .conteudo .container-configuracao button {
+        min-width: 240px;
+    }
+}

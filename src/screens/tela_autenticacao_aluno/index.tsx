@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { emailEstaValido } from '../../utils/validacoes';
 
 import db from '../../providers/firebase';
+import { getAuth } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+
+import { Aluno } from '../../models/Aluno';
 
 import Loading from '../../components/loading';
 
@@ -15,6 +18,23 @@ export default function TelaAutenticacaoAluno(){
     const [statusCarregando, setStatusCarregando] = useState<string>("");
 
     const [email, setEmail] = useState<string>("");
+
+    useEffect(() => {
+        redirecionarSeAutenticado();
+    }, []);
+
+    /**
+     * Redireciona automaticamente para a página de meus-treinos caso o aluno já esteja autenticado;
+     * Ou para a tela de lista de alunos caso o administrador já esteja autenticado.
+     */
+    const redirecionarSeAutenticado = () => {
+        if(localStorage.getItem("alunoAutenticado") !== null){
+            let dadosAluno: Aluno = JSON.parse(localStorage.getItem("alunoAutenticado") || "");
+            navigate('/meus-treinos?idAluno='+(dadosAluno.idAluno));
+        }else if(getAuth().currentUser !== null){
+            navigate('/lista-alunos');
+        }
+    }
 
     /**
      * Busca o e-mail do aluno no banco de dados firestore. Redireciona para a tela meus-treinos se o e-mail for encontrado.
@@ -40,8 +60,11 @@ export default function TelaAutenticacaoAluno(){
 
             let dadosAluno = documentosRetornados.docs[0].data();
 
+            //Salva o objeto aluno no localStorage, para que possa ser acessado pelo componente SideBar em qualquer página.
+            localStorage.setItem('alunoAutenticado', JSON.stringify(dadosAluno));
+
             //Redireciona para a tela com os treinos do aluno
-            navigate('/meus-treinos?idAluno='+dadosAluno.idAluno, {state: {aluno: dadosAluno}});
+            navigate('/meus-treinos?idAluno='+dadosAluno.idAluno);
         }catch(erro){
             alert(erro);
         }finally{

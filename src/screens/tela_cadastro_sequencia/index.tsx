@@ -43,7 +43,7 @@ export default function TelaCadastroSequencia(){
 
     const [modalExercicioVisivel, setModalExercicioVisivel] = useState<boolean>(false);
     const [exercicios, setExercicios] = useState<Exercicio[]>([]);
-    const [posicaoSelecionadaArray, setPosicaoSelecionadaArray] = useState<number>(NaN);
+    const [posicaoArrayExercicioSelecionado, setPosicaoArrayExercicioSelecionado] = useState<number>(NaN);
     const [idExercicioSelecionado, setIDExercicioSelecionado] = useState<string>("");
     const [tempo, setTempo] = useState<number>(0);
     
@@ -56,7 +56,6 @@ export default function TelaCadastroSequencia(){
      * Também inicializa os campos dessa tela caso seja uma atualização.
      */
     const inicializarCampos = async () => {
-        console.log(stateParams);
         if(stateParams === null || stateParams.aluno === undefined || stateParams.treino === undefined){
             navigate('/lista-alunos');
         }else{
@@ -115,16 +114,15 @@ export default function TelaCadastroSequencia(){
      * Abre o modal com o formulário para adição de exercício com os campos resetados
      */
     const abrirModalAdicionarExercicio = (posicaoExercicioArray?:number) => {
-        if(posicaoExercicioArray === undefined){
+        if(posicaoExercicioArray === undefined){    //Se for para um novo cadastro
             setTempo(0);
             setIDExercicioSelecionado("");
-            setPosicaoSelecionadaArray(NaN);
-        }else{
+            setPosicaoArrayExercicioSelecionado(NaN);
+        }else{  //Se for para uma edição
             let exercicioTreino: ExercicioTreino = exerciciosTreino[posicaoExercicioArray];
-            console.log(exercicioTreino.tempo);
             setIDExercicioSelecionado(exercicioTreino.idExercicio);
             setTempo(exercicioTreino.tempo);
-            setPosicaoSelecionadaArray(posicaoExercicioArray);
+            setPosicaoArrayExercicioSelecionado(posicaoExercicioArray); //Com a posição do array que contém todos os exercícios é possível ter acesso ao id e ao nome para uso no select dos exercícios
         }
 
         setModalExercicioVisivel(true);
@@ -138,21 +136,29 @@ export default function TelaCadastroSequencia(){
     const adicionarExercicio = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        let novoExercicio: ExercicioTreino = {
-            idExercicio: idExercicioSelecionado,
-            tempo: tempo
-        }
-        
-        let listaExercicios = exerciciosTreino;
+        try{
+            if(idExercicioSelecionado === ""){
+                throw new Error ("Nenhum exercício foi selecionado");
+            }
 
-        if(isNaN(posicaoSelecionadaArray)){  //Novo cadastro
-            listaExercicios.push(novoExercicio);
-        }else{  //Edição de cadastro
-            listaExercicios[posicaoSelecionadaArray] = novoExercicio;
+            let novoExercicio: ExercicioTreino = {
+                idExercicio: idExercicioSelecionado,
+                tempo: tempo
+            }
+            
+            let listaExercicios = exerciciosTreino;
+    
+            if(isNaN(posicaoArrayExercicioSelecionado)){  //Novo cadastro
+                listaExercicios.push(novoExercicio);
+            }else{  //Edição de cadastro
+                listaExercicios[posicaoArrayExercicioSelecionado] = novoExercicio;
+            }
+    
+            setExerciciosTreino([...listaExercicios]);
+            setModalExercicioVisivel(false);
+        }catch(erro){
+            alert(erro);
         }
-
-        setExerciciosTreino([...listaExercicios]);
-        setModalExercicioVisivel(false);
     }
 
     /**

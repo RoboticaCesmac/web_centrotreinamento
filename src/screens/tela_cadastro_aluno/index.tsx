@@ -62,7 +62,7 @@ export default function TelaCadastroAluno(){
             event.preventDefault(); //Para não recarregar a página
 
             if(nome.length < 3 || emailEstaValido(email) === false || objetivo === "" || (temProblemaFisico === true && descricaoProblemaFisico === "")){
-                return new Error ("Preencha todos os campos obrigatórios (nome, email e objetivo");
+                throw new Error ("Preencha todos os campos obrigatórios (nome, email e objetivo");
             }
 
             let alunoID = idAluno;

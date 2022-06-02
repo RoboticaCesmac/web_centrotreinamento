@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { emailEstaValido } from '../../utils/validacoes';
 
 import db from '../../providers/firebase';
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+
+import { Aluno } from '../../models/Aluno';
 
 import Loading from '../../components/loading';
 
@@ -16,6 +18,23 @@ export default function TelaAutenticacao(){
 
     const [email, setEmail] = useState<string>("");
     const [senha, setSenha] = useState<string>("");
+
+    useEffect(() => {
+        redirecionarSeAutenticado();
+    }, []);
+    
+    /**
+     * Redireciona automaticamente para a tela de lista de alunos caso o administrador já esteja autenticado;
+     * Ou para a página de meus-treinos caso um aluno já esteja autenticado.
+     */
+    const redirecionarSeAutenticado = () => {
+        if(getAuth().currentUser !== null){
+            navigate('/lista-alunos');
+        }else if(localStorage.getItem("alunoAutenticado") !== null){
+            let dadosAluno: Aluno = JSON.parse(localStorage.getItem("alunoAutenticado") || "");
+            navigate('/meus-treinos?idAluno='+(dadosAluno.idAluno));
+        }
+    }
 
     /**
      * Faz a autenticação no banco de dados firebase

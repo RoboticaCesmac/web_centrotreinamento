@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import db from '../../providers/firebase';
-import { collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, DocumentData, getDocs, limit, query, QueryDocumentSnapshot, startAfter, where } from 'firebase/firestore';
 
 import { Aluno } from '../../models/Aluno';
 
@@ -22,6 +22,11 @@ export default function TelaListaAlunos(){
     const [busca, setBusca] = useState<string>("");
     const [alunos, setAlunos] = useState<Aluno[]>([]);
 
+    //Paginação
+    const [paginaAtual, setPaginaAtual] = useState<number>(1);
+    const [limitePorBusca, setLimitePorBusca] = useState<number>(10);
+    const [ultimoDocumentoPagina, setUltimoDocumentoPagina] = useState<QueryDocumentSnapshot<DocumentData> | undefined>();
+
     useEffect(() => {
         buscarAlunos();
     }, []);
@@ -30,19 +35,36 @@ export default function TelaListaAlunos(){
      * Carrega para um array os alunos cadastrados no banco de dados firestore.
      * Aplica o filtro se houver algo digitado no campo de busca.
      */
-    const buscarAlunos = async () => {
+    const buscarAlunos = async (buscaPorMaisResultados?: boolean) => {
         try{
             setStatusCarregando("Buscando alunos...");
 
-            //FALTA FAZER ESSA CONSULTA FUNCIONAR COMO UM LIKE OPERATOR. POR EXEMPLO: PARA O NOME FULANO, SE PESQUISAR POR ULA ELE DEVE ENCONTRAR.
-            //Pesquisar por prefixos: https://stackoverflow.com/questions/46568142/google-firestore-query-on-substring-of-a-property-value-text-search
-            let consulta = query(collection(db, "alunos"), where("nome", ">=", busca), where("nome", "<=", busca+"~"));
-            let documentosAlunos = await getDocs(consulta);
+            let listaAlunos: Aluno[] = alunos;
+            //Para uso na paginação - https://firebase.google.com/docs/firestore/query-data/query-cursors?hl=pt-br#paginate_a_query
+            let ultimoDocumento: QueryDocumentSnapshot<DocumentData> | undefined = ultimoDocumentoPagina;
 
-            let listaAlunos: Aluno[] = [];
-            documentosAlunos.forEach((documento) => {
+            //Pesquisa por prefixos: https://stackoverflow.com/questions/46568142/google-firestore-query-on-substring-of-a-property-value-text-search
+            let consulta = query(collection(db, "alunos"), where("nome", ">=", busca), where("nome", "<=", busca+"~"), limit(limitePorBusca));
+
+            //Se a busca for devido ao loading da página ou por ter apertado no botão buscar, então reinicia a lista de documentos encontrados.
+            if(buscaPorMaisResultados === undefined || buscaPorMaisResultados === false){
+                ultimoDocumento = undefined;
+                listaAlunos = [];
+                setPaginaAtual(1);
+            }
+
+            //Se houver ultimo documento, então começa a nova busca a partir dele
+            if(ultimoDocumento !== undefined){
+                consulta = query(consulta, startAfter(ultimoDocumento));
+            }
+            
+            //Realiza a consulta após ter feito sua preparação
+            let colecaoAlunos = await getDocs(consulta);
+
+            //Guarda o resultado na lista
+            colecaoAlunos.forEach((documento) => {
                 let dadosAluno = documento.data();
-
+                
                 listaAlunos.push({
                     idAluno: dadosAluno.idAluno,
                     nome: dadosAluno.nome,
@@ -53,12 +75,25 @@ export default function TelaListaAlunos(){
                 });
             });
 
+            //Guarda o último doc para que na próxima consulta se for avançar de página, possa começar a partir dele.
+            ultimoDocumento = colecaoAlunos.docs[colecaoAlunos.docs.length-1];
+
+            setUltimoDocumentoPagina(ultimoDocumento);
             setAlunos([...listaAlunos]);
         }catch(erro){
             alert(erro);
         }finally{
             setStatusCarregando("");
         }
+    }
+
+    /**
+     * Aumenta a quantidade de página e faz uma nova busca a partir de onde parou
+     */
+    const mostrarMaisResultados = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+        setPaginaAtual(paginaAtual + 1);
+        buscarAlunos(true);
     }
 
     /**
@@ -127,9 +162,10 @@ export default function TelaListaAlunos(){
                             </table>
 
                             <div className="paginacao">
-                                <a>Voltar</a>
-                                <p>0/0</p>
-                                <a>Avançar</a>
+                                {/* Se tiver chegado até a quantidade máxima de itens, então ainda tem chance de ter dados */}
+                                {alunos.length >= (limitePorBusca*paginaAtual) &&
+                                    <a href="/#" onClick={(event) => {mostrarMaisResultados(event)}}>Mostrar mais</a>                            
+                                }
                             </div>
                         </>
                     :

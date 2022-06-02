@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import db from '../../providers/firebase';
-import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { collection, deleteDoc, doc, DocumentData, getDocs, limit, query, QueryDocumentSnapshot, startAfter, where } from 'firebase/firestore';
 
 import SideBar from '../../components/sidebar';
 import Modal from '../../components/modal';
@@ -23,25 +23,52 @@ export default function TelaListaExercicios(){
     const [modalGIFVisivel, setModalGIFVisivel] = useState<boolean>(false);
     const [URLGifModal, setURLGifModal] = useState<string>("");
     
+    const [busca, setBusca] = useState<string>("");
     const [exercicios, setExercicios] = useState<Exercicio[]>([]);
+
+    //Paginação
+    const [paginaAtual, setPaginaAtual] = useState<number>(1);
+    const [limitePorBusca, setLimitePorBusca] = useState<number>(10);
+    const [ultimoDocumentoPagina, setUltimoDocumentoPagina] = useState<QueryDocumentSnapshot<DocumentData> | undefined>();
 
     /**
      * Executado na primeira renderização da págna
      */
     useEffect(() => {
-        carregarListaExercicios();
+        buscarExercicios();
     }, []);
 
     /**
      * Carrega para um array os exercícios cadastrados no banco de dados firestore
      */
-    const carregarListaExercicios = async () => {
+    const buscarExercicios = async (buscaPorMaisResultados?: boolean) => {
         try{
             setStatusCarregando("Buscando exercícios...");
-            let documentosExercicios = await getDocs(collection(db, "exercicios"));
 
-            let listaExercicios: Exercicio[] = [];
-            documentosExercicios.forEach((documentoExercicio) => {
+            let listaExercicios: Exercicio[] = exercicios;
+            //Para uso na paginação - https://firebase.google.com/docs/firestore/query-data/query-cursors?hl=pt-br#paginate_a_query
+            let ultimoDocumento: QueryDocumentSnapshot<DocumentData> | undefined = ultimoDocumentoPagina;
+
+            //Pesquisa por prefixos: https://stackoverflow.com/questions/46568142/google-firestore-query-on-substring-of-a-property-value-text-search
+            let consulta = query(collection(db, "exercicios"), where("nome", ">=", busca), where("nome", "<=", busca+"~"), limit(limitePorBusca));
+
+            //Se a busca for devido ao loading da página ou por ter apertado no botão buscar, então reinicia a lista de documentos encontrados.
+            if(buscaPorMaisResultados === undefined || buscaPorMaisResultados === false){
+                ultimoDocumento = undefined;
+                listaExercicios = [];
+                setPaginaAtual(1);
+            }
+
+            //Se houver ultimo documento, então começa a nova busca a partir dele
+            if(ultimoDocumento !== undefined){
+                consulta = query(consulta, startAfter(ultimoDocumento));
+            }
+
+            //Realiza a consulta após ter feito sua preparação
+            let colecaoExercicios = await getDocs(consulta);
+
+            //Guarda o resultado na lista
+            colecaoExercicios.forEach((documentoExercicio) => {
                 let dadosExercicio = documentoExercicio.data();
                 listaExercicios.push({
                     idExercicio: dadosExercicio.idExercicio,
@@ -52,12 +79,25 @@ export default function TelaListaExercicios(){
                 });
             });
 
+            //Guarda o último doc para que na próxima consulta se for avançar de página, possa começar a partir dele.
+            ultimoDocumento = colecaoExercicios.docs[colecaoExercicios.docs.length-1];
+
+            setUltimoDocumentoPagina(ultimoDocumento);
             setExercicios([...listaExercicios]);
         }catch(erro){
             alert(erro);
         }finally{
             setStatusCarregando("");
         }
+    }
+
+    /**
+     * Aumenta a quantidade de página e faz uma nova busca a partir de onde parou
+     */
+    const mostrarMaisResultados = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+        setPaginaAtual(paginaAtual + 1);
+        buscarExercicios(true);
     }
 
     /**
@@ -101,8 +141,8 @@ export default function TelaListaExercicios(){
                 </header>
 
                 <form id="container-busca">
-                    <input id="busca-exercicio" placeholder="Buscar exercícios" type="text" />
-                    <button type="button">Buscar</button>
+                    <input id="busca-exercicio" placeholder="Buscar exercícios" type="text" value={busca} onChange={(event) => setBusca(event.target.value)} />
+                    <button type="button" onClick={() => buscarExercicios()}>Buscar</button>
                 </form>
 
                 {exercicios.length !== 0 ?
@@ -134,9 +174,10 @@ export default function TelaListaExercicios(){
                         </table>
 
                         <div className="paginacao">
-                            <a>Voltar</a>
-                            <p>0/0</p>
-                            <a>Avançar</a>
+                            {/* Se tiver chegado até a quantidade máxima de itens, então ainda tem chance de ter dados */}
+                            {exercicios.length >= (limitePorBusca*paginaAtual) && 
+                                <a href="/#" onClick={(event) => {mostrarMaisResultados(event)}}>Mostrar mais</a>
+                            }
                         </div>
                     </>
                 :

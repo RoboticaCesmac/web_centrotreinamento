@@ -44,7 +44,7 @@ body, button, input, textarea, select {
   resize: vertical;
 }
 
-h1, h2, h3, p, label{
+h1, h2, h3, p, label, a {
   color: var(--cor-texto);
 }
 
@@ -76,10 +76,6 @@ input, textarea, select {
 
 .form-group-horizontal {
   flex-direction: row;
-}
-
-.form-group label {
-  padding-left: 5px;
 }
 
 .form-group :nth-of-type(1) {
@@ -139,6 +135,11 @@ table tbody tr:nth-child(even) {  /* Estilo para toda linha par - http://www.dig
   margin: 0px 6px;
 }
 
+.conteudo .paginacao a {
+  text-align: center;
+  text-decoration: none;
+}
+
 /* Quando a largura da tela for 740px ou maior */
 @media(min-width: 740px){
   .conteudo {
@@ -146,7 +147,7 @@ table tbody tr:nth-child(even) {  /* Estilo para toda linha par - http://www.dig
       border-radius: 8px;
   }
 
-  table{
+  table {
     display: table;
   }
 }
