@@ -83,4 +83,19 @@
     #tela-meus-treinos .conteudo header #container-logomarca {
         justify-content: flex-start;
     }
+
+    #tela-meus-treinos .conteudo #sobre-o-treino {
+        margin-bottom: 6.5px;
+    }
+
+    #tela-meus-treinos .conteudo #lista-exercicios {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    #tela-meus-treinos .conteudo .container-exercicio {
+        margin: 6.5px;
+        width: 500px;
+    }
 }

@@ -210,28 +210,36 @@ export default function TelaMeusTreinos(){
                             <p>Observações: {treinos[indexTreinoSelecionado].sequencias[indexSequenciaSelecionada].observacoes}</p>
                         </div>
 
-                        <div>
+                        <div id="lista-exercicios">
                             {exerciciosSequenciaSelecionada.map((exercicioTreino: ExercicioMeusTreinos, index) => {
                                 // Busca os dados do exercicioTreino através da busca pelo id no array de exercícios
                                 let exercicio: Exercicio | undefined = exercicios.find(exercicio => exercicio.idExercicio === exercicioTreino.idExercicio);
                                 return(
                                     <div key={index} className="container-exercicio">
-                                        <div>
-                                            <p>{exercicio?.nome}</p>
-                                        </div>
-        
-                                        <div>
-                                            {(economiaDados === false || exerciciosSequenciaSelecionada[index].esconderImagem === false) ? (
-                                                <img src={exercicio?.urlGIF} alt={"Demonstração do "+exercicio?.nome} />
-                                            ) : (  
-                                                <a onClick={(event) => mostrarImagemEscondida(event, index)}>Mostrar imagem</a>
-                                            )}
-                                        </div>
-        
-                                        <div>
-                                            <p>Descrição: {exercicio?.descricao}</p>
-                                            <p>Tempo: {exercicioTreino.tempo} segundos</p>
-                                        </div>
+                                        {exercicio !== undefined ?
+                                            <>
+                                                <div>
+                                                    <p>{exercicio?.nome}</p>
+                                                </div>
+
+                                                <div>
+                                                    {(economiaDados === false || exerciciosSequenciaSelecionada[index].esconderImagem === false) ? (
+                                                        <img src={exercicio?.urlGIF} alt={"Demonstração do "+exercicio?.nome} />
+                                                    ) : (
+                                                        <a onClick={(event) => mostrarImagemEscondida(event, index)}>Mostrar imagem</a>
+                                                    )}
+                                                </div>
+
+                                                <div>
+                                                    <p>Descrição: {exercicio?.descricao}</p>
+                                                    <p>Tempo: {exercicioTreino.tempo} segundos</p>
+                                                </div>
+                                            </>
+                                        :
+                                            <div>
+                                                <p>Exercício não encontrado</p>
+                                            </div>
+                                        }
                                     </div>
                                 );
                             })}

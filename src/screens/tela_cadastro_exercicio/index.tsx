@@ -55,8 +55,8 @@ export default function TelaCadastroExercicio(){
             event.preventDefault();
 
             //Valida se os todos os campos foram preechidos. Retorna um erro caso a validação falhe.
-            if(nome.length < 3 || gruposMusculares === "" || descricao === "" || urlGIF.length < 40){
-                throw new Error("Preencha todos os campos");
+            if(nome.length < 3 || gruposMusculares === "" || urlGIF.length < 40){
+                throw new Error("Preencha os campos. Apenas o campo descrição não é obrigatório.");
             }
 
             let exercicioID = idExercicio;

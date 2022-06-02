@@ -104,7 +104,15 @@ export default function TelaListaAlunos(){
      const deletarCadastro = async (idAluno: string, posicaoArray: number) => {
         try{
             setStatusCarregando("Deletando cadastro...");
+
+            //Deleta o documento do aluno
             await deleteDoc(doc(db, "alunos", idAluno));
+
+            //Deleta os treinos do aluno
+            let colecaoTreinos = await getDocs(collection(db, "alunos", idAluno, "treinos"));
+            colecaoTreinos.forEach(documento => {
+                deleteDoc(documento.ref);
+            });
 
             //Deleta do vetor de alunos para que não precise fazer a consulta novamente no banco de dados
             let listaAlunos = alunos;

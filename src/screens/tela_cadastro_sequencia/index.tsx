@@ -254,7 +254,7 @@ export default function TelaCadastroSequencia(){
                                     let exercicio: Exercicio | undefined = exercicios.find(exercicio => exercicio.idExercicio === exercicioTreino.idExercicio);
                                     return (
                                         <tr key={index}>
-                                            <td>{exercicio?.nome}</td>
+                                            <td>{(exercicio?.nome || "Não encontrado")}</td>
                                             <td>{exercicioTreino.tempo}s</td>
                                             <td>
                                                 <button type="button"><img src={iconeEditar} alt="Editar" onClick={() => abrirModalAdicionarExercicio(index)} /></button>
