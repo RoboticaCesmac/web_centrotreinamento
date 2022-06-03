@@ -17,10 +17,10 @@
     padding: 10px;
     min-width: 50%;
     border-radius: 7px;
+    max-height: 95%;
 }
 
 /* Cabeçalho */
-
 
 #componente-modal div header {
     display: flex;
