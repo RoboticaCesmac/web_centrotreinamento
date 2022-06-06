@@ -1,5 +1,5 @@
 # Centro de treinamento
-O intuito do [projeto](https://youtu.be/HOh74-ZPbjA) é permitir aos alunos o acesso aos seus treinos através de um smartphone. O sistema permite ao administrador o cadastro de administradores, cadastro de alunos, cadastro de exercícios, cadastro dos treinos e permite ao aluno a visualização dos seus treinos. A visualização dos treinos incluem os exercícios com uma descrição e uma curta animação que mostra a maneira correta de como executá-lo. O sistema está responsivo, então pode ser acessado através de um smartphone ou de um computador.
+O intuito do [projeto](https://youtu.be/QdSN8p3g_3U) é permitir aos alunos o acesso aos seus treinos através de um smartphone. O sistema permite ao administrador o cadastro de administradores, cadastro de alunos, cadastro de exercícios, cadastro dos treinos e permite ao aluno a visualização dos seus treinos. A visualização dos treinos incluem os exercícios com uma descrição e uma curta animação que mostra a maneira correta de como executá-lo. O sistema está responsivo, então pode ser acessado através de um smartphone ou de um computador.
 
 ## Tecnologia
 Projeto criado com a biblioteca [ReactJS](https://create-react-app.dev/docs/getting-started) usando a linguagem TypeScript e o banco de dados Cloud Firestore da plataforma Firebase.
