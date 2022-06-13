@@ -76,12 +76,16 @@ export default function TelaListaTreinos(){
      */
     const deletarCadastro = async (idTreino: string, posicaoArray: number) => {
         try{
-            setStatusCarregando("Deletando cadastro...");
-            await deleteDoc(doc(db, "alunos", (aluno?.idAluno || ""), "treinos", idTreino));
+            let confirmacao = window.confirm("Deseja mesmo deletar o treino?");
 
-            let listaTreinos = treinos;
-            listaTreinos.splice(posicaoArray, 1);
-            setTreinos([...listaTreinos]);
+            if(confirmacao === true){
+                setStatusCarregando("Deletando cadastro...");
+                await deleteDoc(doc(db, "alunos", (aluno?.idAluno || ""), "treinos", idTreino));
+    
+                let listaTreinos = treinos;
+                listaTreinos.splice(posicaoArray, 1);
+                setTreinos([...listaTreinos]);
+            }
         }catch(erro){
             alert(erro);
         }finally{

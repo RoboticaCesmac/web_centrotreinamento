@@ -63,14 +63,18 @@ export default function TelaAutenticacao(){
      */
     const redefinirSenha = async () => {
         try{
-            setStatusCarregando("Solicitando redefinição...");
-
             if(emailEstaValido(email) === false){
                 throw new Error("Email inválido");
             }
 
-            await sendPasswordResetEmail(getAuth(), email);
-            alert("Um e-mail de redefinição de senha foi enviado para "+email);
+            let confirmacao = window.confirm("Deseja receber um e-mail de redefinição de senha?");
+
+            if(confirmacao === true){
+                setStatusCarregando("Solicitando redefinição...");
+    
+                await sendPasswordResetEmail(getAuth(), email);
+                alert("Um e-mail de redefinição de senha foi enviado para "+email);
+            }
         }catch(erro){
             alert(erro);
         }finally{

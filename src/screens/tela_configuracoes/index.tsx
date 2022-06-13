@@ -53,22 +53,26 @@ export default function TelaConfiguracoes(){
      */
     const deletarConta = async () => {
         try{
-            setStatusCarregando("Deletando usuário...");
-
             let usuarioLogado = getAuth().currentUser;
 
             if(usuarioLogado !== null){
-                let consulta = query(collection(db, "usuarios"), limit(5));
-                let colecaoUsuarios = await getDocs(consulta);
+                let confirmacao = window.confirm("Deseja mesmo deletar a sua conta?");
 
-                //Só deixa excluir se não for o único usuário cadastrado
-                if(colecaoUsuarios.docs.length < 2){
-                    throw new Error("Não é possível deletar o único usuário cadastrado.");
+                if(confirmacao === true){
+                    setStatusCarregando("Deletando usuário...");
+
+                    let consulta = query(collection(db, "usuarios"), limit(5));
+                    let colecaoUsuarios = await getDocs(consulta);
+    
+                    //Só deixa excluir se não for o único usuário cadastrado
+                    if(colecaoUsuarios.docs.length < 2){
+                        throw new Error("Não é possível deletar o único usuário cadastrado.");
+                    }
+    
+                    await deleteUser(usuarioLogado);
+                    await deleteDoc(doc(db, "usuarios", usuarioLogado.uid));
+                    navigate("/");
                 }
-
-                await deleteUser(usuarioLogado);
-                await deleteDoc(doc(db, "usuarios", usuarioLogado.uid));
-                navigate("/");
             }else{
                 throw new Error("O usuário não está autenticado. Tente sair da sua conta e entrar novamente.");
             }

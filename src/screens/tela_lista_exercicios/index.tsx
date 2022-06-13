@@ -107,13 +107,17 @@ export default function TelaListaExercicios(){
      */
     const deletarCadastro = async (idExercicio: string, index: number) => {
         try{
-            setStatusCarregando("Deletando cadastro...");
-            await deleteDoc(doc(db, "exercicios", idExercicio));
-
-            //Deleta a posição no vetor de exercícios para que não precise fazer a consulta novamente no banco de dados
-            let listaExercicios = exercicios;
-            listaExercicios.splice(index, 1);
-            setExercicios([...listaExercicios]);
+            let confirmacao = window.confirm("Deseja mesmo deletar o exercício?");
+            
+            if(confirmacao === true){
+                setStatusCarregando("Deletando cadastro...");
+                await deleteDoc(doc(db, "exercicios", idExercicio));
+    
+                //Deleta a posição no vetor de exercícios para que não precise fazer a consulta novamente no banco de dados
+                let listaExercicios = exercicios;
+                listaExercicios.splice(index, 1);
+                setExercicios([...listaExercicios]);
+            }
         }catch(erro){
             alert(erro);
         }finally{
