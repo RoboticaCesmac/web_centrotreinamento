@@ -101,7 +101,7 @@ export default function TelaListaUsuarios(){
                         <button type="button" onClick={() => navigate("/cadastro-administrador")}>Cadastrar novo administrador</button>
                     </header>
 
-                    <form id="container-busca">
+                    <form id="container-busca" onSubmit={(event) => {event.preventDefault(); buscarUsuarios();}}>
                         <input id="busca-usuario" placeholder="Buscar usuarios" type="text" value={busca} onChange={(event) => setBusca(event.target.value)} />
                         <button type="button" onClick={() => buscarUsuarios()}>Buscar</button>
                     </form>

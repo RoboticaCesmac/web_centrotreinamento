@@ -82,6 +82,10 @@ input, textarea, select {
   margin-bottom: 5px;
 }
 
+.form-group-horizontal :nth-of-type(1){
+  margin-left: 5px;
+}
+
 /* Conteúdo */
 
 .conteudo {

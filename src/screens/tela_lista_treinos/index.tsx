@@ -103,7 +103,7 @@ export default function TelaListaTreinos(){
                     <button type="button" onClick={() => navigate("/cadastro-treino", {state: {aluno: aluno}})}>Cadastrar novo treino</button>
                 </header>
 
-                <form id="container-busca">
+                <form id="container-busca" onSubmit={(event) => {event.preventDefault()}}>
                     <input id="busca-treino" placeholder="Buscar exercícios" type="text" />
                     <button type="button">Buscar</button>
                 </form>

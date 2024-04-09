@@ -13,6 +13,7 @@ import { ExercicioTreino } from '../../models/ExercicioTreino';
 import { Exercicio } from '../../models/Exercicio';
 
 import logomarca from '../../assets/images/logo_cs.png';
+import imagemNaoEncontrada from '../../assets/images/imagem_nao_encontrada.png';
 
 import './styles.css';
 
@@ -224,15 +225,16 @@ export default function TelaMeusTreinos(){
 
                                                 <div>
                                                     {(economiaDados === false || exerciciosSequenciaSelecionada[index].esconderImagem === false) ? (
-                                                        <img src={exercicio?.urlGIF} alt={"Demonstração do "+exercicio?.nome} />
+                                                        <img src={exercicio?.urlGIF} alt={"Demonstração do "+exercicio?.nome} onError={( event ) => {event.currentTarget.onerror = null; /*prevents looping*/ event.currentTarget.src=imagemNaoEncontrada}} />
                                                     ) : (
-                                                        <a onClick={(event) => mostrarImagemEscondida(event, index)}>Mostrar imagem</a>
+                                                        <a href="/#" onClick={(event) => mostrarImagemEscondida(event, index)}>Mostrar imagem</a>
                                                     )}
                                                 </div>
 
                                                 <div>
-                                                    <p>Descrição: {exercicio?.descricao}</p>
-                                                    <p>Tempo: {exercicioTreino.tempo} segundos</p>
+                                                    {(exercicio.descricao !== undefined && exercicio.descricao !== "") ? <p>Descrição: {exercicio?.descricao}</p> : undefined}
+                                                    {exercicioTreino.series !== undefined ? <p>Séries: {exercicioTreino.series}</p> : undefined}
+                                                    {exercicioTreino.repeticoes !== undefined ? <p>Repetições: {exercicioTreino.repeticoes}</p> : undefined}
                                                 </div>
                                             </>
                                         :

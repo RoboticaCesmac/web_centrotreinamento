@@ -13,6 +13,7 @@ import { Exercicio } from '../../models/Exercicio';
 import iconeVideo from '../../assets/images/icons/play-button.png';
 import iconeApagar from '../../assets/images/icons/trash-can-lighter.png';
 import iconeEditar from '../../assets/images/icons/edit-lighter.png';
+import imagemNaoEncontrada from '../../assets/images/imagem_nao_encontrada.png';
 
 import './styles.css';
 
@@ -144,7 +145,7 @@ export default function TelaListaExercicios(){
                     <button type="button" onClick={() => navigate("/cadastro-exercicio")}>Cadastrar novo exercício</button>
                 </header>
 
-                <form id="container-busca">
+                <form id="container-busca" onSubmit={(event) => {event.preventDefault(); buscarExercicios();}}>
                     <input id="busca-exercicio" placeholder="Buscar exercícios" type="text" value={busca} onChange={(event) => setBusca(event.target.value)} />
                     <button type="button" onClick={() => buscarExercicios()}>Buscar</button>
                 </form>
@@ -191,7 +192,7 @@ export default function TelaListaExercicios(){
             
             <Modal titulo="Visualização do GIF" visivel={modalGIFVisivel} onClose={() => setModalGIFVisivel(!modalGIFVisivel)}>
                 <div id="modal-visualizacao-gif">
-                    <img src={URLGifModal} alt="GIF animado" referrerPolicy="no-referrer" />
+                    <img src={URLGifModal} alt="GIF animado" referrerPolicy="no-referrer" onError={( event ) => {event.currentTarget.onerror = null; /*prevents looping*/ event.currentTarget.src=imagemNaoEncontrada}} />
                     <button onClick={() => setModalGIFVisivel(false)}>Ok</button>
                 </div>
             </Modal>

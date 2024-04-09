@@ -45,7 +45,8 @@ export default function TelaCadastroSequencia(){
     const [exercicios, setExercicios] = useState<Exercicio[]>([]);
     const [posicaoArrayExercicioSelecionado, setPosicaoArrayExercicioSelecionado] = useState<number>(NaN);
     const [idExercicioSelecionado, setIDExercicioSelecionado] = useState<string>("");
-    const [tempo, setTempo] = useState<number>(0);
+    const [series, setSeries] = useState<number>(0);
+    const [repeticoes, setRepeticoes] = useState<number>(0);
     
     useEffect(() => {
         inicializarCampos();
@@ -115,13 +116,15 @@ export default function TelaCadastroSequencia(){
      */
     const abrirModalAdicionarExercicio = (posicaoExercicioArray?:number) => {
         if(posicaoExercicioArray === undefined){    //Se for para um novo cadastro
-            setTempo(0);
+            setSeries(0);
+            setRepeticoes(0);
             setIDExercicioSelecionado("");
             setPosicaoArrayExercicioSelecionado(NaN);
         }else{  //Se for para uma edição
             let exercicioTreino: ExercicioTreino = exerciciosTreino[posicaoExercicioArray];
             setIDExercicioSelecionado(exercicioTreino.idExercicio);
-            setTempo(exercicioTreino.tempo);
+            setSeries(exercicioTreino.series);
+            setSeries(exercicioTreino.repeticoes);
             setPosicaoArrayExercicioSelecionado(posicaoExercicioArray); //Com a posição do array que contém todos os exercícios é possível ter acesso ao id e ao nome para uso no select dos exercícios
         }
 
@@ -143,7 +146,8 @@ export default function TelaCadastroSequencia(){
 
             let novoExercicio: ExercicioTreino = {
                 idExercicio: idExercicioSelecionado,
-                tempo: tempo
+                series: series,
+                repeticoes: repeticoes
             }
             
             let listaExercicios = exerciciosTreino;
@@ -243,7 +247,8 @@ export default function TelaCadastroSequencia(){
                             <thead>
                                 <tr>
                                     <th>Nome</th>
-                                    <th>Tempo</th>
+                                    <th>Séries</th>
+                                    <th>Repetições</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -255,7 +260,8 @@ export default function TelaCadastroSequencia(){
                                     return (
                                         <tr key={index}>
                                             <td>{(exercicio?.nome || "Não encontrado")}</td>
-                                            <td>{exercicioTreino.tempo}s</td>
+                                            <td>{exercicioTreino.series}</td>
+                                            <td>{exercicioTreino.repeticoes}</td>
                                             <td>
                                                 <button type="button"><img src={iconeEditar} alt="Editar" onClick={() => abrirModalAdicionarExercicio(index)} /></button>
                                                 <button type="button" onClick={() => removerExercicio(index)}><img src={iconeApagar} alt="Apagar" /></button>
@@ -292,8 +298,13 @@ export default function TelaCadastroSequencia(){
                         {/* Falta adicionar uma função pra caso o exercício seja conjugado (um exercício seguido do outro, sem descanso). Uma opção que permite escolher mais de um exercício */}
 
                         <div className="form-group">
-                            <label htmlFor="tempo">Tempo (segundos)</label>
-                            <input id="tempo" type="number" value={(isNaN(tempo) ? 0 : tempo)} onChange={(event) => setTempo(parseInt(event.target.value))} />
+                            <label htmlFor="series">Séries</label>
+                            <input id="series" type="number" value={(isNaN(series) ? 0 : series)} onChange={(event) => setSeries(parseInt(event.target.value))} />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="repeticoes">Repetições</label>
+                            <input id="repeticoes" type="number" value={(isNaN(repeticoes) ? 0 : repeticoes)} onChange={(event) => setRepeticoes(parseInt(event.target.value))} />
                         </div>
 
                         <div id="container-botoes">

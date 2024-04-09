@@ -3,5 +3,6 @@
  */
 export interface ExercicioTreino {
     idExercicio: string,    //ID do exercício cadastrado no sistema
-    tempo: number
+    series: number
+    repeticoes: number
 }

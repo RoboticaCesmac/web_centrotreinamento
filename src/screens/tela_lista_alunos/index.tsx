@@ -140,7 +140,7 @@ export default function TelaListaAlunos(){
                         <button type="button" onClick={() => navigate("/cadastro-aluno")}>Cadastrar novo aluno</button>
                     </header>
 
-                    <form id="container-busca">
+                    <form id="container-busca" onSubmit={(event) => {event.preventDefault(); buscarAlunos();}}>
                         <input id="busca-aluno" type="text" placeholder="Buscar alunos" value={busca} onChange={(event) => setBusca(event.target.value)} />
                         <button type="button" onClick={() => buscarAlunos()}>Buscar</button>
                     </form>
