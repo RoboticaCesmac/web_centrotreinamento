@@ -5,7 +5,7 @@ import db from '../../providers/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
 import { Treino } from '../../models/Treino';
-import { Sequencia } from '../../models/Sequencia';
+import { Bloco } from '../../models/Bloco';
 import { Exercicio } from '../../models/Exercicio';
 import { ExercicioTreino } from '../../models/ExercicioTreino';
 import { Aluno } from '../../models/Aluno';
@@ -19,25 +19,24 @@ import iconeEditar from '../../assets/images/icons/edit-lighter.png';
 
 import './styles.css';
 
-interface ParametrosStateSequencia {
+interface ParametrosStateBloco {
     treino: Treino,
     aluno: Aluno
 }
 
-export default function TelaCadastroSequencia(){
+export default function TelaCadastroBloco(){
     const navigate = useNavigate();
     const location = useLocation();
-    const stateParams = location.state as ParametrosStateSequencia;
+    const stateParams = location.state as ParametrosStateBloco;
     const queryParams = new URLSearchParams(useLocation().search);
     const [statusCarregando, setStatusCarregando] = useState<string>("");
     
     const [aluno, setAluno] = useState<Aluno>();
     const [treinoUltimaTela, setTreinoUltimaTela] = useState<Treino>();
-    const [indexSequenciaEdicao, setIndexSequenciaEdicao] = useState<number | undefined>(undefined);
+    const [indexBlocoEdicao, setIndexBlocoEdicao] = useState<number | undefined>(undefined);
 
-    const [sequencia, setSequencia] = useState<string>("");
+    const [bloco, setBloco] = useState<string>("");
     const [gruposMusculares, setGruposMusculares] = useState<string>("");
-    const [numerosCiclos, setNumerosCiclos] = useState<number>(0);
     const [observacoes, setObservacoes] = useState<string>("");
     const [exerciciosTreino, setExerciciosTreino] = useState<ExercicioTreino[]>([]);
 
@@ -64,16 +63,15 @@ export default function TelaCadastroSequencia(){
 
             let treinoParametro: Treino = stateParams.treino;
 
-            if(queryParams.get("indexSequencia") !== null){
-                let indexSequencia = parseInt(queryParams.get("indexSequencia") || "");
-                setIndexSequenciaEdicao(indexSequencia);
+            if(queryParams.get("indexBloco") !== null){
+                let indexBloco = parseInt(queryParams.get("indexBloco") || "");
+                setIndexBlocoEdicao(indexBloco);
 
-                let sequencia: Sequencia = treinoParametro.sequencias[indexSequencia];
-                setSequencia(sequencia.sequencia);
-                setGruposMusculares(sequencia.gruposMusculares);
-                setNumerosCiclos(sequencia.numeroCiclos);
-                setObservacoes(sequencia.observacoes);
-                setExerciciosTreino(sequencia.exercicios);
+                let bloco: Bloco = treinoParametro.blocos[indexBloco];
+                setBloco(bloco.bloco);
+                setGruposMusculares(bloco.gruposMusculares);
+                setObservacoes(bloco.observacoes);
+                setExerciciosTreino(bloco.exercicios);
             }
 
             setTreinoUltimaTela(treinoParametro);
@@ -124,7 +122,7 @@ export default function TelaCadastroSequencia(){
             let exercicioTreino: ExercicioTreino = exerciciosTreino[posicaoExercicioArray];
             setIDExercicioSelecionado(exercicioTreino.idExercicio);
             setSeries(exercicioTreino.series);
-            setSeries(exercicioTreino.repeticoes);
+            setRepeticoes(exercicioTreino.repeticoes);
             setPosicaoArrayExercicioSelecionado(posicaoExercicioArray); //Com a posição do array que contém todos os exercícios é possível ter acesso ao id e ao nome para uso no select dos exercícios
         }
 
@@ -176,7 +174,7 @@ export default function TelaCadastroSequencia(){
     }
 
     /**
-     * Envia para a página de treino os dados da sequência juntamente com os exercícios escolhidos para que possa ser salvo no banco de dados.
+     * Envia para a página de treino os dados do bloco juntamente com os exercícios escolhidos para que possa ser salvo no banco de dados.
      * @param event 
      */
     const salvarCadastro = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -184,51 +182,45 @@ export default function TelaCadastroSequencia(){
 
         let treino: Treino | undefined = treinoUltimaTela;
         if(treino !== undefined){
-            let sequencias: Sequencia[] = treino.sequencias;
+            let blocos: Bloco[] = treino.blocos;
 
-            let objSequencia: Sequencia = {
-                sequencia: sequencia,
+            let objBloco: Bloco = {
+                bloco: bloco,
                 gruposMusculares: gruposMusculares,
-                numeroCiclos: numerosCiclos,
                 observacoes: observacoes,
                 exercicios: exerciciosTreino
             }
 
-            if(indexSequenciaEdicao === undefined){
-                sequencias.push(objSequencia);
+            if(indexBlocoEdicao === undefined){
+                blocos.push(objBloco);
             }else{
-                sequencias[indexSequenciaEdicao] = objSequencia;
+                blocos[indexBlocoEdicao] = objBloco;
             }
 
 
-            treino.sequencias = sequencias;
+            treino.blocos = blocos;
             navigate("/cadastro-treino", { state: { treino: treino, aluno: aluno} });
         }
     }
 
     return (
-        <div id="tela-cadastro-sequencia">
+        <div id="tela-cadastro-bloco">
             <SideBar />
 
             <div className="conteudo">
                 <header>
-                    <h2>Cadastro de sequência</h2>
+                    <h2>Cadastro de bloco</h2>
                 </header>
 
                 <form>
                     <div className="form-group">
-                        <label htmlFor="sequencia">Sequência</label>
-                        <input id="sequencia" type="text" value={sequencia} onChange={(event) => setSequencia(event.target.value)} />
+                        <label htmlFor="bloco">Bloco</label>
+                        <input id="bloco" type="text" value={bloco} onChange={(event) => setBloco(event.target.value)} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="grupos-musculares">Grupos musculares</label>
                         <input id="grupos-musculares" type="text" value={gruposMusculares} onChange={(event) => setGruposMusculares(event.target.value)} />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="numero-ciclos">Número de ciclos</label>
-                        <input id="numero-ciclos" type="number" min={1} value={numerosCiclos} onChange={(event) => setNumerosCiclos(parseInt(event.target.value))} />
                     </div>
 
                     <div className="form-group">

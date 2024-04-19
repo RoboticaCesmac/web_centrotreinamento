@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { emailEstaValido } from '../../utils/validacoes';
+import { traduzirErroFirebase } from '../../utils/firebase';
 
 import db from '../../providers/firebase';
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
@@ -51,8 +52,8 @@ export default function TelaAutenticacao(){
 
             //Redireciona para a tela de lista de alunos
             navigate('/lista-alunos');
-        }catch(erro){
-            alert(erro);
+        }catch(erro: any){
+            alert(traduzirErroFirebase(erro));
         }finally{
             setStatusCarregando("");
         }
@@ -75,8 +76,8 @@ export default function TelaAutenticacao(){
                 await sendPasswordResetEmail(getAuth(), email);
                 alert("Um e-mail de redefinição de senha foi enviado para "+email);
             }
-        }catch(erro){
-            alert(erro);
+        }catch(erro: any){
+            alert(traduzirErroFirebase(erro));
         }finally{
             setStatusCarregando("");
         }

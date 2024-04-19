@@ -7,7 +7,7 @@ import TelaAutenticacaoAdministrador from './screens/tela_autenticacao_administr
 import TelaCadastroAdministrador from './screens/tela_cadastro_administrador';
 import TelaCadastroAluno from './screens/tela_cadastro_aluno';
 import TelaCadastroExercicio from './screens/tela_cadastro_exercicio';
-import TelaCadastroSequencia from './screens/tela_cadastro_sequencia';
+import TelaCadastroBloco from './screens/tela_cadastro_bloco';
 import TelaCadastroTreino from './screens/tela_cadastro_treino';
 import TelaListaUsuarios from './screens/tela_lista_administradores';
 import TelaListaAlunos from './screens/tela_lista_alunos';
@@ -44,7 +44,7 @@ const PrivateRoute = (props: RouteProps): JSX.Element => {
         <Route path="/cadastro-exercicio" element={<PrivateRoute><TelaCadastroExercicio /></PrivateRoute>} />
         <Route path="/lista-treinos" element={<PrivateRoute><TelaListaTreinos /></PrivateRoute>} />
         <Route path="/cadastro-treino" element={<PrivateRoute><TelaCadastroTreino /></PrivateRoute>} />
-        <Route path="/cadastro-sequencia" element={<PrivateRoute><TelaCadastroSequencia /></PrivateRoute>} />
+        <Route path="/cadastro-bloco" element={<PrivateRoute><TelaCadastroBloco /></PrivateRoute>} />
         <Route path="/configuracoes" element={<PrivateRoute><TelaConfiguracoes /></PrivateRoute>} />
         <Route path="/meus-treinos" element={<TelaMeusTreinos />} />
         <Route path="/sobre" element={<TelaSobre />} />

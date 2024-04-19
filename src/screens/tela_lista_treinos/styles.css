@@ -36,6 +36,26 @@
     text-align: center;
 }
 
+/* Modal visualização de treino */
+
+#tela-lista-treinos #modal-visualizacao-treino {
+    margin-top: 10px;
+}
+
+#tela-lista-treinos #modal-visualizacao-treino #sobre-o-treino {
+    background-color: var(--cor-plano-de-fundo-primaria-escuro);
+    padding: 10px;
+    border-radius: 7px;
+}
+
+#tela-lista-treinos #modal-visualizacao-treino .container-exercicio {
+
+}
+
+#tela-lista-treinos #modal-visualizacao-treino .container-exercicio img {
+    width: 100%;
+}
+
 /* Obs.: Configuração da tabela tá no global.css*/
 
 /* Quando a largura da tela for 740px ou maior */

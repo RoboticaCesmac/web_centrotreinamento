@@ -32,8 +32,8 @@ export default function TelaMeusTreinos(){
     const [treinos, setTreinos] = useState<Treino[]>([]);
     const [exercicios, setExercicios] = useState<Exercicio[]>([]);
     const [indexTreinoSelecionado, setIndexTreinoSelecionado] = useState<number>(NaN);
-    const [indexSequenciaSelecionada, setIndexSequenciaSelecionada] = useState<number>(NaN);
-    const [exerciciosSequenciaSelecionada, setExerciciosSequenciaSelecionada] = useState<ExercicioMeusTreinos[]>([]);
+    const [indexBlocoSelecionado, setIndexBlocoSelecionado] = useState<number>(NaN);
+    const [exerciciosBlocoSelecionado, setExerciciosBlocoSelecionado] = useState<ExercicioMeusTreinos[]>([]);
 
     useEffect(() => {
         inicializarTela();
@@ -80,8 +80,8 @@ export default function TelaMeusTreinos(){
                     idTreino: dadosTreino.idTreino,
                     nome: dadosTreino.nome,
                     objetivo: dadosTreino.objetivo,
-                    divisaoTreino: dadosTreino.divisaoTreino,
-                    sequencias: dadosTreino.sequencias
+                    diasSemana: dadosTreino.diasSemana,
+                    blocos: dadosTreino.blocos
                 });
             });
 
@@ -124,23 +124,23 @@ export default function TelaMeusTreinos(){
     }
 
     /**
-     * Define o state do indexTreinoSelecionado para o escolhido e reseta o estado do indexSequenciaSelecionada e dos exerciciosSequenciaSelecionada,
-     * para que o usuário possa escolher a sequência para o novo treino selecionado.
+     * Define o state do indexTreinoSelecionado para o escolhido e reseta o estado do indexBlocoSelecionado e dos exerciciosBlocoSelecionado,
+     * para que o usuário possa escolher o bloco para o novo treino selecionado.
      * @param index 
      */
     const selecionarTreino = (index: number) => {
         setIndexTreinoSelecionado(index);
-        setIndexSequenciaSelecionada(NaN);
-        setExerciciosSequenciaSelecionada([]);
+        setIndexBlocoSelecionado(NaN);
+        setExerciciosBlocoSelecionado([]);
     }
 
     /**
-     * Define o state do indexSequenciaSelecionada para o escolhido e guarda os exercícios dessa sequência.
+     * Define o state do indexBlocoSelecionado para o escolhido e guarda os exercícios desse bloco.
      * @param index 
      */
-    const selecionarSequencia = (index: number) => {
-        setIndexSequenciaSelecionada(index);
-        setExerciciosSequenciaSelecionada(treinos[indexTreinoSelecionado].sequencias[index].exercicios);
+    const selecionarBloco = (index: number) => {
+        setIndexBlocoSelecionado(index);
+        setExerciciosBlocoSelecionado(treinos[indexTreinoSelecionado].blocos[index].exercicios);
     }
 
     /**
@@ -150,9 +150,9 @@ export default function TelaMeusTreinos(){
      */
     const mostrarImagemEscondida = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, index: number) => {
         event.preventDefault(); //PreventDefault para não dar reload na página
-        let listaExercicios = exerciciosSequenciaSelecionada;
+        let listaExercicios = exerciciosBlocoSelecionado;
         listaExercicios[index].esconderImagem = false;
-        setExerciciosSequenciaSelecionada([...listaExercicios]);
+        setExerciciosBlocoSelecionado([...listaExercicios]);
     }
 
     return(
@@ -189,30 +189,29 @@ export default function TelaMeusTreinos(){
                     </div>
                     
                     <div className="form-group">
-                        <label htmlFor="sequencia-treino">Sequência</label>
-                        <select value={indexSequenciaSelecionada.toString()} onChange={(event) => selecionarSequencia(parseInt(event.target.value))}>
-                            <option value={"NaN"} disabled={true}>Selecione a sequência</option>
+                        <label htmlFor="bloco-treino">Bloco</label>
+                        <select value={indexBlocoSelecionado.toString()} onChange={(event) => selecionarBloco(parseInt(event.target.value))}>
+                            <option value={"NaN"} disabled={true}>Selecione o bloco</option>
                             {isNaN(indexTreinoSelecionado) === false && 
-                             treinos[indexTreinoSelecionado].sequencias.map((sequencia, index) => {
+                             treinos[indexTreinoSelecionado].blocos.map((bloco, index) => {
                                 return(
-                                    <option key={index} value={index}>{sequencia.sequencia}</option>
+                                    <option key={index} value={index}>{bloco.bloco}</option>
                                 );
                             })}
                         </select>
                     </div>
                 </form>
                 
-                {isNaN(indexSequenciaSelecionada) === false &&
+                {isNaN(indexBlocoSelecionado) === false &&
                     <>
                         <div id="sobre-o-treino">
                             <p>Objetivo: {treinos[indexTreinoSelecionado].objetivo}</p>
-                            <p>Grupos musculares: {treinos[indexTreinoSelecionado].sequencias[indexSequenciaSelecionada].gruposMusculares}</p>
-                            <p>Número de ciclos: {treinos[indexTreinoSelecionado].sequencias[indexSequenciaSelecionada].numeroCiclos}</p>
-                            <p>Observações: {treinos[indexTreinoSelecionado].sequencias[indexSequenciaSelecionada].observacoes}</p>
+                            <p>Grupos musculares: {treinos[indexTreinoSelecionado].blocos[indexBlocoSelecionado].gruposMusculares}</p>
+                            <p>Observações: {treinos[indexTreinoSelecionado].blocos[indexBlocoSelecionado].observacoes}</p>
                         </div>
 
                         <div id="lista-exercicios">
-                            {exerciciosSequenciaSelecionada.map((exercicioTreino: ExercicioMeusTreinos, index) => {
+                            {exerciciosBlocoSelecionado.map((exercicioTreino: ExercicioMeusTreinos, index) => {
                                 // Busca os dados do exercicioTreino através da busca pelo id no array de exercícios
                                 let exercicio: Exercicio | undefined = exercicios.find(exercicio => exercicio.idExercicio === exercicioTreino.idExercicio);
                                 return(
@@ -224,7 +223,7 @@ export default function TelaMeusTreinos(){
                                                 </div>
 
                                                 <div>
-                                                    {(economiaDados === false || exerciciosSequenciaSelecionada[index].esconderImagem === false) ? (
+                                                    {(economiaDados === false || exerciciosBlocoSelecionado[index].esconderImagem === false) ? (
                                                         <img src={exercicio?.urlGIF} alt={"Demonstração do "+exercicio?.nome} onError={( event ) => {event.currentTarget.onerror = null; /*prevents looping*/ event.currentTarget.src=imagemNaoEncontrada}} />
                                                     ) : (
                                                         <a href="/#" onClick={(event) => mostrarImagemEscondida(event, index)}>Mostrar imagem</a>

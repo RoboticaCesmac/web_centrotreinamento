@@ -1,54 +1,54 @@
 /* Cabeçalhos */
 
-#tela-cadastro-sequencia .conteudo header {
+#tela-cadastro-bloco .conteudo header {
     margin-bottom: 8px;
 }
 
-#tela-cadastro-sequencia .conteudo header h2 {
+#tela-cadastro-bloco .conteudo header h2 {
     padding-bottom: 5px;
     border-bottom: solid 1px;
     border-color: var(--cor-plano-de-fundo-primaria-escuro);
     flex: 1;
 }
 
-#tela-cadastro-sequencia .conteudo header > button:first-of-type {
+#tela-cadastro-bloco .conteudo header > button:first-of-type {
     margin-top: 5px;
     width: 100%;
 }
 
-#tela-cadastro-sequencia .conteudo form .form-group {
+#tela-cadastro-bloco .conteudo form .form-group {
     margin-bottom: 8px;
 }
 
 /* Botões formulário */
 
-#tela-cadastro-sequencia .conteudo form #container-botoes {
+#tela-cadastro-bloco .conteudo form #container-botoes {
     display: flex;
     flex-direction: column;
 }
 
-#tela-cadastro-sequencia .conteudo form #container-botoes button:not(:first-child) {
+#tela-cadastro-bloco .conteudo form #container-botoes button:not(:first-child) {
     /* Exceto para o primeiro botão */
     margin-top: 10px;
 }
 
 /* Ícones tabela */
 
-#tela-cadastro-sequencia .conteudo table tr td:last-child img {
+#tela-cadastro-bloco .conteudo table tr td:last-child img {
     height: 16px;
 }
 
-#tela-cadastro-sequencia .conteudo #container-botoes {
+#tela-cadastro-bloco .conteudo #container-botoes {
     padding-top: 10px;
     border-top: 1px solid var(--cor-plano-de-fundo-primaria-escuro);
     margin-top: 10px;
 }
 
-#tela-cadastro-sequencia .conteudo #nenhum-registro {
+#tela-cadastro-bloco .conteudo #nenhum-registro {
     text-align: center;
 }
 
-#tela-cadastro-sequencia .conteudo table {
+#tela-cadastro-bloco .conteudo table {
     display: table;
 }
 
@@ -56,27 +56,27 @@
 
 @media(min-width: 740px){
     /* Cabeçalhos */
-    #tela-cadastro-sequencia .conteudo header {
+    #tela-cadastro-bloco .conteudo header {
         display: flex;
         flex-direction: row;
     }
 
-    #tela-cadastro-sequencia .conteudo header > button:first-of-type {
+    #tela-cadastro-bloco .conteudo header > button:first-of-type {
         width: auto;
     }
     
     /* Formulário */
-    #tela-cadastro-sequencia .conteudo form #container-botoes{
+    #tela-cadastro-bloco .conteudo form #container-botoes{
         flex-direction: row;
         justify-content: flex-end;
     }
 
-    #tela-cadastro-sequencia .conteudo form #container-botoes button:not(:first-child) {
+    #tela-cadastro-bloco .conteudo form #container-botoes button:not(:first-child) {
         /* Exceto para o primeiro botão */
         margin-top: 0px;
     }
 
-    #tela-cadastro-sequencia .conteudo form #container-botoes button:first-child{
+    #tela-cadastro-bloco .conteudo form #container-botoes button:first-child{
         margin-right: 10px;
     }
 }

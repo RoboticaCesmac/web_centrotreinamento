@@ -1,9 +1,9 @@
-import { Sequencia } from "./Sequencia";
+import { Bloco } from "./Bloco";
 
 export interface Treino {
     idTreino?: string,
     nome: string,
     objetivo: string,
-    divisaoTreino: string,
-    sequencias: Sequencia[]
+    diasSemana: string[],
+    blocos: Bloco[]
 }

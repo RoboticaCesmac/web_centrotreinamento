@@ -1,0 +1,50 @@
+#componente-select-multiplo #container-botoes {
+    display: flex;
+}
+
+#componente-select-multiplo #select-fechado {
+    position: relative;
+}
+
+#componente-select-multiplo #select-fechado input {
+    width: 100%;
+    cursor: default;
+}
+
+#componente-select-multiplo #select-fechado img {
+    position: absolute;
+    height: 30%;
+    top: 10px;
+    right: 10px;
+}
+
+#componente-select-multiplo #container-itens {
+    display: flex;
+    flex-direction: column;
+}
+
+#componente-select-multiplo #container-itens button {
+    text-align: start;
+    margin-bottom: 2px;
+    color: var(--cor-texto-escuro);
+    background-color: var(--cor-plano-de-fundo-primaria-escuro);
+}
+
+#componente-select-multiplo #container-itens .item-selecionado {
+    background-color: var(--cor-item-selecionado);
+}
+
+#componente-select-multiplo #itens-selecionados {
+    margin-top: 5px;
+}
+
+#componente-select-multiplo #modal-container-botoes {
+    border-top: solid 1px;
+    padding-top: 5px;
+    border-color: var(--cor-plano-de-fundo-primaria-escuro);
+    display: flex;
+}
+
+#componente-select-multiplo #modal-container-botoes button {
+    flex: 1;
+}
