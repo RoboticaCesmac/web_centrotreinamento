@@ -14,8 +14,10 @@ import SideBar from '../../components/sidebar';
 import Modal from '../../components/modal';
 import Loading from '../../components/loading';
 
+import iconeVideo from '../../assets/images/icons/play-button.png';
 import iconeApagar from '../../assets/images/icons/trash-can-lighter.png';
 import iconeEditar from '../../assets/images/icons/edit-lighter.png';
+import imagemNaoEncontrada from '../../assets/images/imagem_nao_encontrada.png';
 
 import './styles.css';
 
@@ -47,6 +49,8 @@ export default function TelaCadastroBloco(){
     const [series, setSeries] = useState<number>(0);
     const [repeticoes, setRepeticoes] = useState<number>(0);
     
+    const [URLGifModal, setURLGifModal] = useState<string | undefined>(undefined);
+
     useEffect(() => {
         inicializarCampos();
     }, []);
@@ -255,7 +259,8 @@ export default function TelaCadastroBloco(){
                                             <td>{exercicioTreino.series}</td>
                                             <td>{exercicioTreino.repeticoes}</td>
                                             <td>
-                                                <button type="button"><img src={iconeEditar} alt="Editar" onClick={() => abrirModalAdicionarExercicio(index)} /></button>
+                                                <button type="button" onClick={() => abrirModalAdicionarExercicio(index)}><img src={iconeEditar} alt="Editar" /></button>
+                                                <button type="button" onClick={() => setURLGifModal(exercicio?.urlGIF)}><img src={iconeVideo} alt="GIF" /></button>
                                                 <button type="button" onClick={() => removerExercicio(index)}><img src={iconeApagar} alt="Apagar" /></button>
                                             </td>
                                         </tr>
@@ -304,6 +309,13 @@ export default function TelaCadastroBloco(){
                             <button type="submit" onClick={(event) => adicionarExercicio(event)}>Salvar exercício</button>
                         </div>
                     </form>
+                </Modal>
+
+                <Modal titulo="Visualização do GIF" visivel={URLGifModal !== undefined} onClose={() => setURLGifModal(undefined)}>
+                    <div id="modal-visualizacao-gif">
+                        <img src={URLGifModal} alt="GIF animado" referrerPolicy="no-referrer" onError={( event ) => {event.currentTarget.onerror = null; /*prevents looping*/ event.currentTarget.src=imagemNaoEncontrada}} />
+                        <button onClick={() => setURLGifModal(undefined)}>Ok</button>
+                    </div>
                 </Modal>
 
                 <Loading statusLoading={statusCarregando} />

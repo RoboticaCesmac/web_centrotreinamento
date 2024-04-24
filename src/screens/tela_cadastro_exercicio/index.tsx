@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import db from '../../providers/firebase';
-import { collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 import { Exercicio } from '../../models/Exercicio';
 
@@ -25,6 +26,10 @@ export default function TelaCadastroExercicio(){
     const [gruposMusculares, setGruposMusculares] = useState<string>("");
     const [descricao, setDescricao] = useState<string>("");
     const [urlGIF, setURLGIF] = useState<string>("");
+
+    const storage = getStorage();
+    const refInputGIF = useRef<HTMLInputElement>(null);
+    const [arquivosGIF, setArquivosGIF] = useState<FileList | null>(null);
 
     useEffect(() => {
         inicializarCampos();
@@ -62,13 +67,13 @@ export default function TelaCadastroExercicio(){
             let exercicioID = idExercicio;
 
             if(exercicioID === "")
-                exercicioID = doc(collection(db, "alunos")).id;
+                exercicioID = doc(collection(db, "exercicios")).id;
 
-            let urlGIFAjustado = urlGIF;
-            //Se a URL for realmente do google drive e ainda não tiver sido ajustada, então faz o ajuste na URL (pra que possa ser exibida posteriormente na tag img)
-            if(urlGIF.search("drive") > -1 && urlGIF.search("thumbnail") === -1){
-                let urlDividida = urlGIF.split("d/");
-                urlGIFAjustado = "https://drive.google.com/thumbnail?id="+urlDividida[1].split("/")[0];
+            // Salva a imagem no storage do firebase
+            let urlGIFStorage = undefined;
+            if(arquivosGIF !== null){
+                const uploadSnapshot = await uploadBytes(ref(storage, "exercicios/"+exercicioID), arquivosGIF[0]);
+                urlGIFStorage = await getDownloadURL(uploadSnapshot.ref);
             }
 
             let exercicio: Exercicio = {
@@ -76,7 +81,7 @@ export default function TelaCadastroExercicio(){
                 nome: nome,
                 gruposMusculares: gruposMusculares,
                 descricao: descricao,
-                urlGIF: urlGIFAjustado
+                urlGIF: urlGIFStorage || urlGIF // Se for edição e a imagem não tiver sido alterada, mantém a que já estava
             }
 
             //Se o exercício já existir apenas atualiza, mas se não existir, cria um novo cadastro. (merge: true)
@@ -91,6 +96,26 @@ export default function TelaCadastroExercicio(){
         }
     }
 
+    /**
+     * Abre a imagem (se existir) e abre o explorer
+     * caso seja para selecionar uma nova imagem
+     * @returns 
+     */
+    const adicionarOuAbrirImagem = () => {
+        if(urlGIF === ""){
+            // Abre o explorer do sistema
+            refInputGIF.current?.click();
+            return;
+        }
+
+        // Abre o link da imagem
+        window.open(urlGIF);
+    }
+
+    const abrirExplorer = () => {
+        refInputGIF.current?.click();
+    }
+
     return (
         <div id="tela-cadastro-exercicio">
             <SideBar />
@@ -103,23 +128,30 @@ export default function TelaCadastroExercicio(){
                 <form>
                     <div className="form-group">
                         <label htmlFor="nome">Nome</label>
-                        <input id="nome" type="text" value={nome} onChange={(event) => setNome(event.target.value)} />
+                        <input id="nome" type="text" placeholder="Nome do exercício" value={nome} onChange={(event) => setNome(event.target.value)} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="grupos-musculares">Grupos musculares</label>
-                        <input id="grupos-musculares" type="text" value={gruposMusculares} onChange={(event) => setGruposMusculares(event.target.value)} />
+                        <input id="grupos-musculares" type="text" placeholder="Grupos musculares trabalhados" value={gruposMusculares} onChange={(event) => setGruposMusculares(event.target.value)} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="descricao">Descrição</label>
-                        <textarea id="descricao" value={descricao} onChange={(event) => setDescricao(event.target.value)} />
+                        <textarea id="descricao" value={descricao} placeholder="Descrição do exercício" onChange={(event) => setDescricao(event.target.value)} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="gif-url">Link GIF Google Drive</label>
-                        <input id="gif-url" type="url" value={urlGIF} onChange={(event) => setURLGIF(event.target.value)} />
+                        <label htmlFor="gif-url">Arquivo de imagem</label>
+                        <div id="container-input-files">
+                            <input placeholder='Nenhum arquivo escolhido' value={urlGIF} onClick={() => adicionarOuAbrirImagem()} />
+                            <input ref={refInputGIF} id="gif-url" type="file" accept='image/gif' value={urlGIF} onChange={(event) => setArquivosGIF(event.target.files)} />
+                            
+                            <button type="button" onClick={() => {(urlGIF === "" || arquivosGIF === null) ?  : apagarImagem()}}>{urlGIF === "" ? "Adicionar" : "Apagar"}</button>
+                        </div>
                     </div>
+
+                    {/* <input id="gif-url" type="url" value={urlGIF} onChange={(event) => setURLGIF(event.target.value)} /> */}
 
                     <div id="container-botoes">
                         <button type="button" onClick={() => navigate('/lista-exercicios')}>Cancelar</button>

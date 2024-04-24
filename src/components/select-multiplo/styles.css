@@ -9,6 +9,7 @@
 #componente-select-multiplo #select-fechado input {
     width: 100%;
     cursor: default;
+    caret-color: transparent;
 }
 
 #componente-select-multiplo #select-fechado img {

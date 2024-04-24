@@ -128,7 +128,7 @@ export default function TelaListaExercicios(){
 
     /**
      * Torna o modal de visualização do gif visível e atribui o URL que ele irá exibir
-     * @param exercicio 
+     * @param urlGIF 
      */
     const visualizarGIF = async (urlGIF: string) => {
         setURLGifModal(urlGIF);
@@ -169,7 +169,7 @@ export default function TelaListaExercicios(){
                                             <td>{exercicio.gruposMusculares}</td>
                                             <td>
                                                 <button type="button" onClick={() => navigate("/cadastro-exercicio", { state: {exercicio: exercicio} })}><img src={iconeEditar} alt="Editar" /></button>
-                                                <button type="button"><img src={iconeVideo} alt="GIF" onClick={() => visualizarGIF(exercicio.urlGIF)}/></button>
+                                                <button type="button" onClick={() => visualizarGIF(exercicio.urlGIF)}><img src={iconeVideo} alt="GIF" /></button>
                                                 <button type="button" onClick={() => deletarCadastro(exercicio.idExercicio || "", index)}><img src={iconeApagar} alt="Apagar" /></button>
                                             </td>
                                         </tr>

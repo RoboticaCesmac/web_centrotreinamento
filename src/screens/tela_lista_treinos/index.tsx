@@ -202,55 +202,55 @@ export default function TelaListaTreinos(){
 
                 <Loading statusLoading={statusCarregando} />
             </main>
-
+            
             <Modal titulo={'Visualização de '+treinoVisualizacao?.nome} visivel={treinoVisualizacao !== undefined} onClose={() => setTreinoVisualizacao(undefined)}>
                 <div id="modal-visualizacao-treino">
-                    <div className="form-group">
-                        <select value={indexBlocoVisualizado.toString()} onChange={(event) => setIndexBlocoVisualizado(parseInt(event.target.value))}>
-                            <option value={"NaN"} disabled={true}>Selecione o bloco</option>
-                            {treinoVisualizacao?.blocos.map((bloco, index) => {
-                                return(
-                                    <option key={index} value={index}>{bloco.bloco}</option>
-                                );
-                            })}
-                        </select>
-                    </div>
-                        
-                    {!isNaN(indexBlocoVisualizado) &&
-                    <>
-                        <div id="sobre-o-treino">
-                            <p>Objetivo: {treinoVisualizacao?.objetivo}</p>
-                            <p>Grupos musculares: {treinoVisualizacao?.blocos[indexBlocoVisualizado]?.gruposMusculares}</p>
-                            <p>Observações: {treinoVisualizacao?.blocos[indexBlocoVisualizado]?.observacoes}</p>
-                        </div>
-
-                        {treinoVisualizacao?.blocos[indexBlocoVisualizado]?.exercicios.map((exercicioTreino: ExercicioTreino, index) => {
-                            // Busca os dados do exercicioTreino através da busca pelo id no array de exercícios
-                            let exercicio: Exercicio | undefined = exercicios.find(exercicio => exercicio.idExercicio === exercicioTreino.idExercicio);
-
-                            
-
+                    <select value={indexBlocoVisualizado.toString()} onChange={(event) => setIndexBlocoVisualizado(parseInt(event.target.value))}>
+                        <option value={"NaN"} disabled={true}>Selecione o bloco</option>
+                        {treinoVisualizacao?.blocos.map((bloco, index) => {
                             return(
-                                <div>
-                                    <div>
-                                        <p>{exercicio?.nome}</p>
-                                    </div>
-
-                                    <div>
-                                        <img src={exercicio?.urlGIF} alt={"Demonstração do "+exercicio?.nome} onError={( event ) => {event.currentTarget.onerror = null; /*prevents looping*/ event.currentTarget.src=imagemNaoEncontrada}} />
-                                    </div>
-
-                                    <div>
-                                        {(exercicio?.descricao !== undefined && exercicio?.descricao !== "") ? <p>Descrição: {exercicio?.descricao}</p> : undefined}
-                                        {exercicioTreino.series !== undefined ? <p>Séries: {exercicioTreino.series}</p> : undefined}
-                                        {exercicioTreino.repeticoes !== undefined ? <p>Repetições: {exercicioTreino.repeticoes}</p> : undefined}
-                                    </div>
-                                </div>
+                                <option key={index} value={index}>{bloco.bloco}</option>
                             );
                         })}
-                    </>
-                    }
+                    </select>
+                        
+                    {!isNaN(indexBlocoVisualizado) &&
+                        <>
+                            <div id="sobre-o-treino">
+                                <p>Objetivo: {treinoVisualizacao?.objetivo}</p>
+                                <p>Grupos musculares: {treinoVisualizacao?.blocos[indexBlocoVisualizado]?.gruposMusculares}</p>
+                                <p>Observações: {treinoVisualizacao?.blocos[indexBlocoVisualizado]?.observacoes}</p>
+                            </div>
+                            
+                            <div id="lista-exercicios">
+                                {treinoVisualizacao?.blocos[indexBlocoVisualizado]?.exercicios.map((exercicioTreino: ExercicioTreino, index) => {
+                                    // Busca os dados do exercicioTreino através da busca pelo id no array de exercícios
+                                    let exercicio: Exercicio | undefined = exercicios.find(exercicio => exercicio.idExercicio === exercicioTreino.idExercicio);
 
+                                    return(
+                                        <div key={index} className="container-exercicio">
+                                            <div>
+                                                <p>{exercicio?.nome}</p>
+                                            </div>
+
+                                            <div>
+                                                <img src={exercicio?.urlGIF} alt={"Demonstração do "+exercicio?.nome} 
+                                                    onError={( event ) => {event.currentTarget.onerror = null; /*prevents looping*/ event.currentTarget.src=imagemNaoEncontrada}} />
+                                            </div>
+
+                                            <div>
+                                                {(exercicio?.descricao !== undefined && exercicio?.descricao !== "") ? <p>Descrição: {exercicio?.descricao}</p> : undefined}
+                                                {exercicioTreino.series !== undefined ? <p>Séries: {exercicioTreino.series}</p> : undefined}
+                                                {exercicioTreino.repeticoes !== undefined ? <p>Repetições: {exercicioTreino.repeticoes}</p> : undefined}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+
+                            <button type="button" id="botao-fechar" onClick={() => setTreinoVisualizacao(undefined)}>Fechar</button>
+                        </>
+                    }
                 </div>
             </Modal>
         </div>

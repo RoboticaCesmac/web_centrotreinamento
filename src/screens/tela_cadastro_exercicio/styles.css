@@ -12,6 +12,22 @@
     margin-bottom: 8px;
 }
 
+#tela-cadastro-exercicio #gif-url {
+    display: none;
+}
+
+#tela-cadastro-exercicio #container-input-files {
+    display: flex;
+    flex-direction: row;
+}
+
+#tela-cadastro-exercicio #container-input-files input {
+    flex: 1;
+    margin-right: 10px;
+    cursor: pointer;
+    caret-color: transparent;
+}
+
 /* Botões formulário */
 
 #tela-cadastro-exercicio .conteudo form #container-botoes {

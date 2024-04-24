@@ -8,7 +8,7 @@ interface propriedadesModal{
     titulo: string,
     visivel:boolean,
     onClose:() => void,
-    children: JSX.Element
+    children: JSX.Element,
 }
 
 export default function Modal(props: propriedadesModal){

@@ -38,21 +38,41 @@
 
 /* Modal visualização de treino */
 
+#tela-lista-treinos #modal-visualizacao-treino select {
+    width: 100%;
+}
+
 #tela-lista-treinos #modal-visualizacao-treino {
     margin-top: 10px;
 }
 
 #tela-lista-treinos #modal-visualizacao-treino #sobre-o-treino {
+    margin-top: 10px;
     background-color: var(--cor-plano-de-fundo-primaria-escuro);
     padding: 10px;
     border-radius: 7px;
 }
 
-#tela-lista-treinos #modal-visualizacao-treino .container-exercicio {
+#tela-lista-treinos #modal-visualizacao-treino #lista-exercicios {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
 
+#tela-lista-treinos #modal-visualizacao-treino .container-exercicio {
+    background-color: var(--cor-plano-de-fundo-primaria-escuro);
+    padding: 10px;
+    border-radius: 7px;
+    margin-top: 10px;
 }
 
 #tela-lista-treinos #modal-visualizacao-treino .container-exercicio img {
+    width: 100%;
+    margin: 5px 0px;
+}
+
+#tela-lista-treinos #modal-visualizacao-treino #botao-fechar {
+    margin-top: 10px;
     width: 100%;
 }
 

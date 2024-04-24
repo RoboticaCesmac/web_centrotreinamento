@@ -52,6 +52,19 @@
     display: table;
 }
 
+/* Modal visualização do GIF */
+
+#tela-cadastro-bloco #modal-visualizacao-gif {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#tela-cadastro-bloco #modal-visualizacao-gif img {
+    margin: 10px 0px;
+    border: 3px solid var(--cor-plano-de-fundo-primaria-escuro);
+}
+
 /* Quando a largura da tela for 740px ou maior */
 
 @media(min-width: 740px){
