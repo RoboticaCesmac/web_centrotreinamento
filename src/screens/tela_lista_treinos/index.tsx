@@ -13,6 +13,7 @@ import Modal from '../../components/modal';
 import SideBar from '../../components/sidebar';
 import Loading from '../../components/loading';
 
+import iconeVoltar from '../../assets/images/icons/arrow-left.png';
 import iconeVisualizar from '../../assets/images/icons/eye.png';
 import iconeApagar from '../../assets/images/icons/trash-can-lighter.png';
 import iconeEditar from '../../assets/images/icons/edit-lighter.png';
@@ -151,7 +152,10 @@ export default function TelaListaTreinos(){
 
             <main className="conteudo">
                 <header>
-                    <h2>Lista de treinos de {aluno?.nome}</h2>
+                    <h2>
+                        <button type="button" id="botao-voltar"><img src={iconeVoltar} alt="Voltar" onClick={() => navigate("/lista-alunos")} /></button>
+                        Lista de treinos de {aluno?.nome}
+                    </h2>
                     <button type="button" onClick={() => navigate("/cadastro-treino", {state: {aluno: aluno}})}>Cadastrar novo treino</button>
                 </header>
 
@@ -178,7 +182,7 @@ export default function TelaListaTreinos(){
                                         <tr key={index}>
                                             <td>{treino.nome}</td>
                                             <td>{treino.objetivo}</td>
-                                            <td>{treino.diasSemana}</td>
+                                            <td>{treino.diasSemana.toString()}</td>
                                             <td>
                                                 <button type="button" onClick={() => visualizarTreino(treino)}><img src={iconeVisualizar} alt="Visualizar" /></button>
                                                 <button type="button" onClick={() => navigate("/cadastro-treino", {state: {aluno: aluno, treino: treino}})}><img src={iconeEditar} alt="Editar" /></button>

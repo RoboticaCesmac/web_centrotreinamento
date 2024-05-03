@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Routes, Route, RouteProps, Navigate } from 'react-router-dom';
 
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import TelaAutenticacaoAluno from './screens/tela_autenticacao_aluno';
 import TelaAutenticacaoAdministrador from './screens/tela_autenticacao_administrador';
@@ -17,17 +18,48 @@ import TelaMeusTreinos from './screens/tela_meus_treinos';
 import TelaConfiguracoes from './screens/tela_configuracoes';
 import TelaSobre from './screens/tela_sobre';
 
+type PropsRotaPrivada = RouteProps & { somenteAdministrador?: boolean };
+
 /**
- * Rotas privadas no react-router v6: https://dev.to/iamandrewluca/private-route-in-react-router-v6-lg5
+ * Rotas privadas, onde só acessa se estiver autenticado
  * @param props 
  * @returns 
  */
-const PrivateRoute = (props: RouteProps): JSX.Element => {
-    if(getAuth().currentUser !== null){
-        return <>{props.children}</>;
-    }else{
-        return(<Navigate to="/" />);
-    }
+function RotaPrivada(props: PropsRotaPrivada){
+  const [carregandoAutenticacao, setCarregandoAutenticacao] = useState<boolean>(true);
+  const [autenticado, setAutenticado] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Guarda o estado da autenticação quando ele for alterado
+    const desinscrever = onAuthStateChanged(getAuth(), (usuario) => {
+      if(usuario === null){
+        // Seta que o usuário não está autenticado
+        setAutenticado(false);
+      }else{
+        // Seta que o usuário está autenticado
+        setAutenticado(true);
+      }
+
+      setCarregandoAutenticacao(false);
+    });
+
+    // Desinscreve do onAuthStateChanged para não continuar checando o estado da autenticação, caso saia da página
+    return () => {
+      desinscrever();
+    };
+  }, []);
+  
+  if(carregandoAutenticacao === true){
+    // Enquanto não tiver buscado o estado da autenticação, não retorna página nenhuma
+    return null;
+  }else if(autenticado === false){
+    // Se já tiver carregado mas o usuário não estiver autenticado, redireciona o usuário para a página de login
+    getAuth().signOut();
+    return <Navigate to="login" />;
+  }else{
+    // Se estiver autenticado, permite entrar na página que deseja
+    return <>{props.children}</>;
+  }
 }
 
 /**
@@ -36,16 +68,16 @@ const PrivateRoute = (props: RouteProps): JSX.Element => {
  */
  const Rotas = () => (
     <Routes>
-        <Route path="/cadastro-administrador" element={<PrivateRoute><TelaCadastroAdministrador /></PrivateRoute>} />
-        <Route path="/lista-administradores" element={<PrivateRoute><TelaListaUsuarios /></PrivateRoute>} />
-        <Route path="/lista-alunos" element={<PrivateRoute><TelaListaAlunos /></PrivateRoute>} />
-        <Route path="/cadastro-aluno" element={<PrivateRoute><TelaCadastroAluno /></PrivateRoute>} />
-        <Route path="/lista-exercicios" element={<PrivateRoute><TelaListaExercicios /></PrivateRoute>} />
-        <Route path="/cadastro-exercicio" element={<PrivateRoute><TelaCadastroExercicio /></PrivateRoute>} />
-        <Route path="/lista-treinos" element={<PrivateRoute><TelaListaTreinos /></PrivateRoute>} />
-        <Route path="/cadastro-treino" element={<PrivateRoute><TelaCadastroTreino /></PrivateRoute>} />
-        <Route path="/cadastro-bloco" element={<PrivateRoute><TelaCadastroBloco /></PrivateRoute>} />
-        <Route path="/configuracoes" element={<PrivateRoute><TelaConfiguracoes /></PrivateRoute>} />
+        <Route path="/cadastro-administrador" element={<RotaPrivada><TelaCadastroAdministrador /></RotaPrivada>} />
+        <Route path="/lista-administradores" element={<RotaPrivada><TelaListaUsuarios /></RotaPrivada>} />
+        <Route path="/lista-alunos" element={<RotaPrivada><TelaListaAlunos /></RotaPrivada>} />
+        <Route path="/cadastro-aluno" element={<RotaPrivada><TelaCadastroAluno /></RotaPrivada>} />
+        <Route path="/lista-exercicios" element={<RotaPrivada><TelaListaExercicios /></RotaPrivada>} />
+        <Route path="/cadastro-exercicio" element={<RotaPrivada><TelaCadastroExercicio /></RotaPrivada>} />
+        <Route path="/lista-treinos" element={<RotaPrivada><TelaListaTreinos /></RotaPrivada>} />
+        <Route path ="/cadastro-treino" element={<RotaPrivada><TelaCadastroTreino /></RotaPrivada>} />
+        <Route path="/cadastro-bloco" element={<RotaPrivada><TelaCadastroBloco /></RotaPrivada>} />
+        <Route path="/configuracoes" element={<RotaPrivada><TelaConfiguracoes /></RotaPrivada>} />
         <Route path="/meus-treinos" element={<TelaMeusTreinos />} />
         <Route path="/sobre" element={<TelaSobre />} />
         <Route path="/autenticacao-administrador" element={<TelaAutenticacaoAdministrador/>} />

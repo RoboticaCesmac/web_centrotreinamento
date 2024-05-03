@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import db from '../../providers/firebase';
 import { collection, deleteDoc, doc, DocumentData, getDocs, limit, query, QueryDocumentSnapshot, startAfter, where } from 'firebase/firestore';
+import { deleteObject, getStorage, ref } from 'firebase/storage';
 
 import SideBar from '../../components/sidebar';
 import Modal from '../../components/modal';
@@ -19,6 +20,7 @@ import './styles.css';
 
 export default function TelaListaExercicios(){
     const navigate = useNavigate();
+    const storage = getStorage();
     const [statusCarregando, setStatusCarregando] = useState<string>("");
     
     const [modalGIFVisivel, setModalGIFVisivel] = useState<boolean>(false);
@@ -112,8 +114,11 @@ export default function TelaListaExercicios(){
             
             if(confirmacao === true){
                 setStatusCarregando("Deletando cadastro...");
+                // Deleta a imagem do storage (se houver)
+                await deleteObject(ref(storage, 'exercicios/'+idExercicio));
+                // Deleta o documento do banco de dados
                 await deleteDoc(doc(db, "exercicios", idExercicio));
-    
+
                 //Deleta a posição no vetor de exercícios para que não precise fazer a consulta novamente no banco de dados
                 let listaExercicios = exercicios;
                 listaExercicios.splice(index, 1);

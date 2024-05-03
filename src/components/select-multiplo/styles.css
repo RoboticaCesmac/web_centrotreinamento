@@ -3,18 +3,32 @@
 }
 
 #componente-select-multiplo #select-fechado {
-    position: relative;
+    display: flex;
+    flex-direction: row;
 }
 
 #componente-select-multiplo #select-fechado input {
-    width: 100%;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#componente-select-multiplo #select-fechado button {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+
+#componente-select-multiplo #select-fechado input {
+    flex: 1;
     cursor: default;
     caret-color: transparent;
 }
 
 #componente-select-multiplo #select-fechado img {
-    position: absolute;
-    height: 30%;
+    /* position: absolute; */
+    height: 12px;
     top: 10px;
     right: 10px;
 }

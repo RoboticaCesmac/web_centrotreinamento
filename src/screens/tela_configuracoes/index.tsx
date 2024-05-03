@@ -98,7 +98,7 @@ export default function TelaConfiguracoes(){
 
                     <div className="form-group">
                         <label htmlFor="email">E-mail</label>
-                        <input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+                        <input id="email" type="email" placeholder="E-mail" value={email} onChange={(event) => setEmail(event.target.value)} />
                     </div>
 
                     <button type="button" onClick={() => alterarEmail()}>Atualizar</button>

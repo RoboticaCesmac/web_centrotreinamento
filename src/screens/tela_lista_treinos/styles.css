@@ -1,5 +1,15 @@
 /* Cabeçalho */
 
+#tela-lista-treinos .conteudo header #botao-voltar {
+    margin: 0px;
+    margin-right: 10px;
+    background-color: transparent;
+}
+
+#tela-lista-treinos .conteudo header #botao-voltar img {
+    height: 16px;
+}
+
 #tela-lista-treinos .conteudo header h2 {
     padding-bottom: 5px;
     border-bottom: solid 1px;

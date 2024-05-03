@@ -142,12 +142,12 @@ export default function TelaCadastroTreino(){
                 <form>
                     <div className="form-group">
                         <label htmlFor="nome">Nome do treino</label>
-                        <input id="nome" type="text" value={nome} onChange={(event) => setNome(event.target.value)} />
+                        <input id="nome" type="text" placeholder="Nome do treino" value={nome} onChange={(event) => setNome(event.target.value)} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="objetivo">Objetivo do treino</label>
-                        <input id="objetivo" type="text" value={objetivo} onChange={(event) => setObjetivo(event.target.value)} />
+                        <input id="objetivo" type="text" placeholder="Objetivo do treino" value={objetivo} onChange={(event) => setObjetivo(event.target.value)} />
                     </div>
 
                     <div className="form-group">

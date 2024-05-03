@@ -46,8 +46,8 @@ export default function TelaCadastroBloco(){
     const [exercicios, setExercicios] = useState<Exercicio[]>([]);
     const [posicaoArrayExercicioSelecionado, setPosicaoArrayExercicioSelecionado] = useState<number>(NaN);
     const [idExercicioSelecionado, setIDExercicioSelecionado] = useState<string>("");
-    const [series, setSeries] = useState<number>(0);
-    const [repeticoes, setRepeticoes] = useState<number>(0);
+    const [series, setSeries] = useState<number>(NaN);
+    const [repeticoes, setRepeticoes] = useState<number>(NaN);
     
     const [URLGifModal, setURLGifModal] = useState<string | undefined>(undefined);
 
@@ -148,8 +148,8 @@ export default function TelaCadastroBloco(){
 
             let novoExercicio: ExercicioTreino = {
                 idExercicio: idExercicioSelecionado,
-                series: series,
-                repeticoes: repeticoes
+                series: series | 0,
+                repeticoes: repeticoes | 0
             }
             
             let listaExercicios = exerciciosTreino;
@@ -219,17 +219,17 @@ export default function TelaCadastroBloco(){
                 <form>
                     <div className="form-group">
                         <label htmlFor="bloco">Bloco</label>
-                        <input id="bloco" type="text" value={bloco} onChange={(event) => setBloco(event.target.value)} />
+                        <input id="bloco" type="text" placeholder="Bloco" value={bloco} onChange={(event) => setBloco(event.target.value)} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="grupos-musculares">Grupos musculares</label>
-                        <input id="grupos-musculares" type="text" value={gruposMusculares} onChange={(event) => setGruposMusculares(event.target.value)} />
+                        <input id="grupos-musculares" type="text" placeholder="Grupos musculares" value={gruposMusculares} onChange={(event) => setGruposMusculares(event.target.value)} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="observacoes">Observações</label>
-                        <textarea id="observacoes" value={observacoes} onChange={(event) => setObservacoes(event.target.value)} />
+                        <textarea id="observacoes"  placeholder="Observações" value={observacoes} onChange={(event) => setObservacoes(event.target.value)} />
                     </div>
 
                     <header>
@@ -296,12 +296,12 @@ export default function TelaCadastroBloco(){
 
                         <div className="form-group">
                             <label htmlFor="series">Séries</label>
-                            <input id="series" type="number" value={(isNaN(series) ? 0 : series)} onChange={(event) => setSeries(parseInt(event.target.value))} />
+                            <input id="series" type="number" value={series} onChange={(event) => setSeries(parseInt(event.target.value))} />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="repeticoes">Repetições</label>
-                            <input id="repeticoes" type="number" value={(isNaN(repeticoes) ? 0 : repeticoes)} onChange={(event) => setRepeticoes(parseInt(event.target.value))} />
+                            <input id="repeticoes" type="number" value={repeticoes} onChange={(event) => setRepeticoes(parseInt(event.target.value))} />
                         </div>
 
                         <div id="container-botoes">

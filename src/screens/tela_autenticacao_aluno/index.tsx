@@ -78,8 +78,8 @@ export default function TelaAutenticacaoAluno(){
                 <img src={logomarca} alt="Logomarca" />
 
                 <div className="form-group">
-                    <label htmlFor="email">E-mail</label>
-                    <input id="email" type="email" value={email} onChange={(event) => setEmail(event?.target.value)} />
+                    <label htmlFor="email">E-mail do aluno</label>
+                    <input id="email" type="email" placeholder="E-mail do aluno" value={email} onChange={(event) => setEmail(event?.target.value)} />
                 </div>
 
                 <button type="submit" onClick={(event) => autenticar(event)}>Entrar</button>

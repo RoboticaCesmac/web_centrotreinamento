@@ -80,11 +80,11 @@ input, textarea, select {
   flex-direction: row;
 }
 
-.form-group :nth-of-type(1) {
+.form-group > :nth-of-type(1) {
   margin-bottom: 5px;
 }
 
-.form-group-horizontal :nth-of-type(1){
+.form-group-horizontal > :nth-of-type(1){
   margin-left: 5px;
 }
 

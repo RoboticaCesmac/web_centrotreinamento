@@ -12,20 +12,39 @@
     margin-bottom: 8px;
 }
 
+/* Input de imagem */
+
 #tela-cadastro-exercicio #gif-url {
     display: none;
 }
 
-#tela-cadastro-exercicio #container-input-files {
+#tela-cadastro-exercicio #container-input-imagem-interno {
     display: flex;
     flex-direction: row;
 }
 
-#tela-cadastro-exercicio #container-input-files input {
+#tela-cadastro-exercicio #container-input-imagem-interno input {
     flex: 1;
-    margin-right: 10px;
-    cursor: pointer;
+    cursor: default;
     caret-color: transparent;
+}
+
+#tela-cadastro-exercicio #container-input-imagem-interno {
+    flex: 1;
+}
+
+#tela-cadastro-exercicio #container-input-imagem-interno button {
+    margin-left: 5px;
+}
+
+#tela-cadastro-exercicio .img-icone{
+    height: 16px;
+    margin: 0px;
+}
+
+#tela-cadastro-exercicio #botao-adicionar-apagar {
+    margin-top: 5px;
+    width: 100%;
 }
 
 /* Botões formulário */
@@ -40,10 +59,33 @@
     margin-top: 10px;
 }
 
+/* Modal visualização do GIF */
+
+#tela-cadastro-exercicio #modal-visualizacao-gif {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#tela-cadastro-exercicio #modal-visualizacao-gif img {
+    margin: 10px 0px;
+    border: 3px solid var(--cor-plano-de-fundo-primaria-escuro);
+}
 
 /* Quando a largura da tela for 740px ou maior */
 
 @media(min-width: 740px){
+    #tela-cadastro-exercicio #container-input-imagem-externo {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #tela-cadastro-exercicio #botao-adicionar-apagar {
+        margin: 0px;
+        margin-left: 5px;
+        width: auto;
+    }
+
     #tela-cadastro-exercicio .conteudo form #container-botoes{
         flex-direction: row;
         justify-content: flex-end;

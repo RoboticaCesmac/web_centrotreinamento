@@ -15,6 +15,7 @@ interface ISelectMultiplo{
     itensDisponiveis: IItemSelectMultiplo[],
     idsItensSelecionados: string[],
     salvar?: (itensSelecionados: string[]) => void,
+    mostrarItensSelecionados?: boolean
 
 }
 
@@ -31,11 +32,9 @@ export default function SelectMultiplo(props: ISelectMultiplo){
         if(indexItem !== -1){
             // Remove o item (desmarca)
             listaIdsItensSelecionados.splice(indexItem, 1);
-            console.log("item desmarcado");
         }else{
             // Adiciona o item (marca)
             listaIdsItensSelecionados.push(itemSelecionado.id);
-            console.log("item marcado");
         }
 
         setIdsItensSelecionados([...listaIdsItensSelecionados]);
@@ -68,7 +67,7 @@ export default function SelectMultiplo(props: ISelectMultiplo){
             if(index !== (listaIdsSelecionados.length - 1)){
                 descricaoItensSelecionados = descricaoItensSelecionados+", ";
             }
-        })
+        });
 
         return descricaoItensSelecionados;
     }
@@ -76,8 +75,8 @@ export default function SelectMultiplo(props: ISelectMultiplo){
     return(
         <div id="componente-select-multiplo">
             <div id="select-fechado">
-                <input placeholder={idsItensSelecionados.length === 0 ? "Selecione um item" : ""} value={listarItensSelecionados(props.idsItensSelecionados)} onClick={() => setModalAberto(true)} />
-                <img id="icone-seta-baixo" src={iconeSetaBaixo} alt="Seta para baixo" />
+                <input placeholder="Selecione um item" value={listarItensSelecionados(props.idsItensSelecionados)} onClick={() => setModalAberto(true)} />
+                <button type="button" onClick={() => setModalAberto(true)}><img id="icone-seta-baixo" src={iconeSetaBaixo} alt="Seta para baixo" /></button>
             </div>
 
             {/* Modal de quando o select está aberto */}
@@ -99,7 +98,7 @@ export default function SelectMultiplo(props: ISelectMultiplo){
                     </div>
                     
                     {/* Descrição dos itens presentes no array de itens selecionados */}
-                    {idsItensSelecionados.length > 0 &&
+                    {(idsItensSelecionados.length > 0 && props.mostrarItensSelecionados === true) &&
                         <p id="itens-selecionados">Selecionado(s):{" "+listarItensSelecionados(idsItensSelecionados)}</p>
                     }
 

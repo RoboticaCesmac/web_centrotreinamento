@@ -121,22 +121,22 @@ export default function TelaCadastroAluno(){
 
                 <form>
                     <div className="form-group">
-                        <label htmlFor="nome">Nome</label>
-                        <input id="nome" type="text" value={nome} onChange={(event) => setNome(event.target.value)} />
+                        <label htmlFor="nome">Nome do aluno</label>
+                        <input id="nome" type="text" placeholder="Nome do aluno" value={nome} onChange={(event) => setNome(event.target.value)} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="email">E-mail</label>
-                        <input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+                        <label htmlFor="email">E-mail do aluno</label>
+                        <input id="email" type="email" placeholder="E-mail do aluno" value={email} onChange={(event) => setEmail(event.target.value)} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="objetivo">Objetivo</label>
-                        <input id="objetivo" type="text" value={objetivo} onChange={(event) => setObjetivo(event.target.value)} />
+                        <label htmlFor="objetivo">Objetivo do aluno</label>
+                        <input id="objetivo" type="text" placeholder="Objetivo do aluno" value={objetivo} onChange={(event) => setObjetivo(event.target.value)} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="problema-fisico">Tem problema físico?</label>
+                        <label htmlFor="problema-fisico">O aluno tem problema físico?</label>
                         <select id="problema-fisico" value={temProblemaFisico === true ? "Sim" : "Não"} onChange={(event) => setTemProblemaFisico(event.target.value === "Sim" ? true : false)}>
                             <option disabled={true}>Selecione</option>
                             <option value={"Sim"}>Sim</option>
@@ -146,14 +146,14 @@ export default function TelaCadastroAluno(){
 
                     {temProblemaFisico === true &&
                         <div className="form-group">
-                            <label htmlFor="descricao-problema-fisico">Descrição do problema físico</label>
-                            <input id="descricao-problema-fisico" type="text" value={descricaoProblemaFisico} onChange={(event) => setDescricaoProblemaFisico(event.target.value)} />
+                            <label htmlFor="descricao-problema-fisico">Descrição do problema físico do aluno</label>
+                            <input id="descricao-problema-fisico" type="text" placeholder="Descrição sobre o problema físico" value={descricaoProblemaFisico} onChange={(event) => setDescricaoProblemaFisico(event.target.value)} />
                         </div>
                     }
 
                     <div className="form-group">
-                        <label htmlFor="observacoes">Observações</label>
-                        <textarea id="observacoes" value={observacoes} onChange={(event) => setObservacoes(event.target.value)} />
+                        <label htmlFor="observacoes">Observações sobre o aluno</label>
+                        <textarea id="observacoes" value={observacoes} placeholder="Observações sobre o aluno" onChange={(event) => setObservacoes(event.target.value)} />
                     </div>
 
                     <div id="container-botoes">

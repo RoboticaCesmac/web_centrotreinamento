@@ -5,8 +5,10 @@ import { traduzirErroFirebase } from '../../utils/firebase';
 
 import db from '../../providers/firebase';
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 import { Aluno } from '../../models/Aluno';
+import { Usuario } from '../../models/Usuario';
 
 import Loading from '../../components/loading';
 
@@ -89,13 +91,13 @@ export default function TelaAutenticacao(){
                 <img src={logomarca} alt="Logomarca" />
 
                 <div className="form-group">
-                    <label htmlFor="email">E-mail</label>
-                    <input id="email" type="email" value={email} onChange={(event) => setEmail(event?.target.value)} />
+                    <label htmlFor="email">E-mail do administrador</label>
+                    <input id="email" type="email" placeholder="E-mail do administrador" value={email} onChange={(event) => setEmail(event?.target.value)} />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="senha">Senha</label>
-                    <input id="senha" type="password" minLength={6} onChange={(event) => setSenha(event?.target.value)} />
+                    <input id="senha" type="password" placeholder="Senha" minLength={6} onChange={(event) => setSenha(event?.target.value)} />
                 </div>
 
                 <button type="submit" onClick={(event) => autenticar(event)}>Entrar</button>
